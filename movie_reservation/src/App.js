@@ -29,6 +29,7 @@ function App() {
   <Route path="movies" element={<ProtectedRoute><MovieList/></ProtectedRoute>}/>
   </Routes>
   </BrowserRouter>
+  <main><Calendar/></main>
   </div>
   );
   }
