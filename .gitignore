@@ -1,1 +1,2 @@
-movie_reservation/node_modules/git rm -r --cached node_modulesgit rm -r --cached node_modules
+movie_reservation/node_modules/
+node_modules/
