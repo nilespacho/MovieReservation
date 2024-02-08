@@ -1,0 +1,23 @@
+/* App.css */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+  }
+  
+  .movie-item {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 10px;
+  }
+  
+  .movie-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .movie-info {
+    padding: 10px 0;
+  }
+  

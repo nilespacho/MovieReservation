@@ -5,6 +5,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import MovieList from './pages/MovieList';
 import Home from './pages/Home';
 import ProtectedRoute from './components/ProtectedRoute';
+import MovieSelect from './components/MovieSelect';
 
 // function App() {
 //   return (
@@ -29,7 +30,8 @@ function App() {
   {/* <Route path="movies" element={<ProtectedRoute><MovieList/></ProtectedRoute>}/> */}
   </Routes>
   </BrowserRouter>
-  <main className='Calendar'><Calendar/></main>
+  {/* <main className='Calendar'><Calendar/></main> */}
+  <MovieSelect/>
   </div>
   );
   }
