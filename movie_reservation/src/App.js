@@ -25,11 +25,11 @@ function App() {
   <div>
   <BrowserRouter>
   <Routes>
-  <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}/>
-  <Route path="movies" element={<ProtectedRoute><MovieList/></ProtectedRoute>}/>
+  {/* <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}/> */}
+  {/* <Route path="movies" element={<ProtectedRoute><MovieList/></ProtectedRoute>}/> */}
   </Routes>
   </BrowserRouter>
-  <main><Calendar/></main>
+  <main className='Calendar'><Calendar/></main>
   </div>
   );
   }
