@@ -2,11 +2,3 @@
   text-align: center;
 }
 
-.Calendar {
-  display: flex;
-  flex-wrap: nowrap;
-  flex-grow: 1;
-  justify-content: center;
-  height: 100vh;
-  /* overflow: hidden; */
-}

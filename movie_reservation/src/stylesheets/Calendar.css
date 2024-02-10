@@ -1,4 +1,13 @@
 
+.Calendar {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    justify-content: center;
+    height: 100vh;
+    /* overflow: hidden; */
+}
 
 .calendar {
     width: 900px;

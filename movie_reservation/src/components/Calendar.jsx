@@ -21,21 +21,23 @@ export default class Calendar extends Component {
 
   render() {
     return (
-      <div className="calendar">
-        <div className="calendar-header">
-          <h2>{this.months[this.state.currentDay.getMonth()]} {this.state.currentDay.getFullYear()}</h2>
-        </div>
-        <div className="calendar-body">
-          <div className="table-header">
-            {
-              this.weekdays.map((weekday) => {
-                return <div className="weekday"><p>{weekday}</p></div>
-              })
-            }
+      <main className="Calendar">
+        <div className="calendar">
+          <div className="calendar-header">
+            <h2>{this.months[this.state.currentDay.getMonth()]} {this.state.currentDay.getFullYear()}</h2>
           </div>
-          <CalendarDays day={this.state.currentDay} changeCurrentDay={this.changeCurrentDay} />
+          <div className="calendar-body">
+            <div className="table-header">
+              {
+                this.weekdays.map((weekday) => {
+                  return <div className="weekday"><p>{weekday}</p></div>
+                })
+              }
+            </div>
+            <CalendarDays day={this.state.currentDay} changeCurrentDay={this.changeCurrentDay} />
+          </div>
         </div>
-      </div>
+      </main>
     )
   }
 }
