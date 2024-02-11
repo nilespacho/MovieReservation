@@ -22,6 +22,7 @@ import MovieSelect from './components/MovieSelect';
 //   );
 // }
 function App() {
+  const selectedDate = new Date().toLocaleDateString(); // Example selected date
   return (
   <div>
   <BrowserRouter>
@@ -31,7 +32,7 @@ function App() {
   </Routes>
   </BrowserRouter>
   {/* <main className='Calendar'><Calendar/></main> */}
-  <MovieSelect/>
+  <MovieSelect selectedDate={selectedDate} />
   </div>
   );
   }
