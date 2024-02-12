@@ -26,7 +26,7 @@ function App() {
   <BrowserRouter>
   <Routes>
   {/* <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}/> */}
-  {/* <Route path="movies" element={<ProtectedRoute><MovieList/></ProtectedRoute>}/> */}
+  <Route path="movies" element={<ProtectedRoute><MovieList/></ProtectedRoute>}/>
   </Routes>
   </BrowserRouter>
   <main className='Calendar'><Calendar/></main>

@@ -1,3 +1,8 @@
+import ProtectedRoute from '../../components/ProtectedRoute';
+import Home from '../Home';
+
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+
 export default function CalendarDays(props) {
     let firstDayOfMonth = new Date(props.day.getFullYear(), props.day.getMonth(), 1);
     let weekdayOfFirstDay = firstDayOfMonth.getDay();
@@ -30,7 +35,9 @@ export default function CalendarDays(props) {
           currentDays.map((day) => {
             return (
               <div className={"calendar-day" + (day.currentMonth ? " current" : " not") + (day.selected ? " selected" : "")}
-                    onClick={() => props.changeCurrentDay(day)}>
+                    onClick={() => props.changeCurrentDay(day) }> 
+                    {/* add the route */}
+                    {/* <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}/> */}
                 <p>{day.number}</p>
               </div>
             )
@@ -39,4 +46,8 @@ export default function CalendarDays(props) {
       </div>
     )
   }
+
+
+
+
 
