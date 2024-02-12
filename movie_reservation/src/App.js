@@ -20,6 +20,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Calendar/>}/>
           <Route path = "/niles" element={<MovieSelected/>} />
+          <Route path = "/gi" element={<MovieSelect/>} />
         </Routes>
 
       </Router>
