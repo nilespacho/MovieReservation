@@ -6,7 +6,7 @@ body {
 .date {
   position: absolute;
   font-family: 'Inter', sans-serif;
-  top: 130px; 
+  top: 50px; 
   left: 50%; 
   transform: translateX(-50%);
   font-size: 25px;
@@ -17,23 +17,25 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 .current-time {
   font-family: 'Inter', sans-serif;
   font-size: 28px;
   position: absolute;
-  top: 20px;
+  top: 5px;
   right: 20px; 
 }
 
 .movie-grid {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  /* align-items: center; */
   flex-wrap: wrap;
-  gap: 132px;
-  padding: 20px;
+  gap: 70px;
+  padding: 10px;
+  /* height: 100vh; */
 }
 
 .movie-item {
@@ -56,7 +58,7 @@ body {
   font-size: 55px;
   text-align: center;
   margin-bottom: 40px; 
-  margin-top: 230px;
+  margin-top: 150px;
 }
 
 .movie-info h2 {
