@@ -10,13 +10,20 @@ import MovieSelected from './components/MovieSelected';
 function App() {
     return (
     <div>
-      <BrowserRouter>
-        <Routes>
+      <Router>
+        {/* <Routes> */}
           {/* <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}/> */}
-          <Route path="movies" element={<ProtectedRoute><MovieList/></ProtectedRoute>}/>
-          </Routes>
-        </BrowserRouter>
-      <main className='Calendar'><Calendar/></main>
+          {/* <Route path="movies" element={<ProtectedRoute><MovieList/></ProtectedRoute>}/> */}
+        {/* </Routes> */}
+
+        <Routes>
+          <Route exact path="/" element={<Calendar/>}/>
+          <Route path = "/niles" element={<MovieSelected/>} />
+        </Routes>
+
+      </Router>
+      
+      {/* <main className='Calendar'><MovieSelected/></main> */}
     </div>
     );
 
