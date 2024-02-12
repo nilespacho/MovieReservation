@@ -5,10 +5,11 @@ export const MovieSelected = () => {
     const REGPRICE = 350;
     const [selectedSeats, setSelectedSeats] = useState([]);
     const [selectedTime, setSelectedTime] = useState(null);
-    const [isSeniorSelected, setIsSeniorSelected] = useState(false);
     const [showCheckOutModal, setShowCheckOutModal] = useState(false);
     const [total, setTotal] = useState(0);
-  
+    const [showSeniorModal, setShowSeniorModal] = useState(false);
+    const [seniorCount, setSeniorCount] = useState(0);
+
     const handleSeatClick = (seat) => {
       const index = selectedSeats.indexOf(seat);
       if (index === -1) 
@@ -32,14 +33,15 @@ export const MovieSelected = () => {
   
     const handleSeniorClick = () => 
     {
-        setIsSeniorSelected(!isSeniorSelected);
-        if (!isSeniorSelected) 
-        {
-            setTotal(total * 0.8); // Applying 20% discount
-        } else 
-        {
-            setTotal(total / 0.8); // Removing 20% discount
-        }
+        setShowSeniorModal(true);
+    };
+
+    const handleSeniorCountSubmit = () => 
+    {
+        setShowSeniorModal(false);
+        // Calculate the total price based on the input provided by the user
+        const total = (selectedSeats.length - seniorCount) * REGPRICE + seniorCount * (REGPRICE * 0.8);
+        setTotal(total);
     };
 
     const handleCheckoutClick = () => 
@@ -122,20 +124,39 @@ export const MovieSelected = () => {
         </div>
 
         
-      {showCheckOutModal && (
+        {showCheckOutModal && (
         <div className="modal">
-          <div className="modal-content">
+            <div className="modalContent">
             <p>Proceed?</p>
-            <div className="modal-buttons">
-              <button className="yesButton" onClick={() => handleModalAction('proceed')}>YES</button>
-              <button className="noButton" onClick={() => handleModalAction('cancel')}>NO</button>
+            <div className="checkoutModalButtons">
+                <button className="yesButton" onClick={() => handleModalAction('proceed')}>YES</button>
+                <button className="noButton" onClick={() => handleModalAction('cancel')}>NO</button>
             </div>
-          </div>
+            </div>
         </div>
-      )}
+        )}
+
+        {showSeniorModal && (
+        <div className="modal">
+            <div className="modalContent">
+                <p className='seniorNumber'>Number of seniors:</p>
+                <input
+                    className='seniorInput'
+                    type="number"
+                    value={seniorCount}
+                    onChange={(e) => setSeniorCount(parseInt(e.target.value))}
+                />
+                <div className="seniorModalButton">
+                    <button className="submitButton" onClick={handleSeniorCountSubmit}>Submit</button>
+                </div>
+            </div>
+        </div>
+        )}
+
+
 
     </div>
     );
   };
-  
+
   export default MovieSelected;

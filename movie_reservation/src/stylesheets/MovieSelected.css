@@ -1,15 +1,15 @@
 .container {
   display: flex;
   justify-content: center;
-  align-items: center; /* Align items to the top */
-  height: 150vh; /* Change to auto height to accommodate varying content */
+  align-items: center; 
+  min-height: 100vh; 
 }
 
 .seatSelection {
-  margin-right: 20px;
+  margin-right: 10px;
   background-color: #D9D9D9;
-  padding: 10px;
-  overflow-y: auto; /* Add vertical scrollbar if content exceeds container height */
+  padding: 5px;
+  /* overflow-y: auto;  */
 }
 
 .row {
@@ -19,8 +19,8 @@
 }
 
 .seat {
-  width: 130px;
-  height: 90px;
+  width: 80px;
+  height: 60px;
   border: 1px solid black;
   margin: 0 5px;
   display: flex;
@@ -124,7 +124,7 @@
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   align-items: center;
-  font-size: 32px;
+  font-size: 28px;
   width: 450px;
   height: 50px;
   cursor: pointer;
@@ -149,9 +149,9 @@
   z-index: 1000; /* Ensure modal appears above other content */
 }
 
-.modal-content {
-  width: 700px; 
-  height: 200px; 
+.modalContent {
+  width: 500px; 
+  height: 250px; 
   background-color: #D9D9D9;
   padding: 20px;
   border-radius: 10px;
@@ -163,14 +163,14 @@
   justify-content: center;
 }
 
-.modal-buttons {  
+.checkoutModalButtons {  
   display: flex;
   justify-content: center; 
 }
 
-.modal-buttons button {
-  width: 200px;
-  height: 80px;
+.checkoutModalButtons button {
+  width: 110px;
+  height: 60px;
   padding: 10px; 
   border: none;
   border-radius: 20px;
@@ -179,20 +179,58 @@
   margin: 0 10px;
 }
 
-.modal-buttons .yesButton {
+.checkoutModalButtons .yesButton {
   background-color: #5D9C59;
-  font-size: 32px;
+  font-size: 22px;
   margin-right: 20px;
 }
 
-.modal-buttons .noButton {
+.checkoutModalButtons .noButton {
   background-color: #DF2E38;
-  font-size: 32px;
+  font-size: 22px;
   margin-left: 20px;
+}
+
+.seniorNumber {
+  margin-bottom: 20px;
+  margin-top: 2px;
+}
+
+.seniorInput {
+  width: 100px;
+  height: 30px;
+  font-size: 16px;
+  padding: 5px;
+  margin: 10px auto;
+}
+
+.seniorModalButton {
+  display: flex;
+  justify-content: center; 
+}
+
+.seniorModalButton button {
+  width: 110px;
+  height: 60px;
+  padding: 10px; 
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  color: white;
+  margin-top: 15px;
+}
+
+.seniorModalButton .submitButton {
+  background-color: #5D9C59;
+  font-size: 22px;
 }
 
 .modal-buttons button:focus {
   outline: none; /* Remove default focus outline */
+}
+
+.seniorModalButton button:focus {
+  outline: none;
 }
 
 /* Responsive adjustments */
@@ -238,24 +276,24 @@
     font-size: 24px;
   }
 
-  .modal-content {
+  .modalContent {
     width: 90%; 
     height: auto; 
     font-size: 24px; 
   }
 
-  .modal-buttons button {
+  .checkoutModalButtons button {
     width: 150px; 
     height: 60px; 
     font-size: 20px; 
     margin: 0 5px; 
   }
 
-  .modal-buttons .yesButton {
+  .checkoutModalButtons .yesButton {
     margin-right: 10px; 
   }
 
-  .modal-buttons .noButton {
+  .checkoutModalButtons .noButton {
     margin-left: 10px; 
   }
 }
