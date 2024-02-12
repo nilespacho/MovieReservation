@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import '../stylesheets/MovieSelected.css';
 
 export const MovieSelected = () => {
-    const REGPRICE = 350
+    const REGPRICE = 350;
     const [selectedSeats, setSelectedSeats] = useState([]);
     const [selectedTime, setSelectedTime] = useState(null);
     const [isSeniorSelected, setIsSeniorSelected] = useState(false);
+    const [showCheckOutModal, setShowCheckOutModal] = useState(false);
     const [total, setTotal] = useState(0);
   
     const handleSeatClick = (seat) => {
@@ -14,7 +15,8 @@ export const MovieSelected = () => {
       {
         setSelectedSeats([...selectedSeats, seat]);
         setTotal(total + REGPRICE); 
-      } else 
+      } 
+      else 
       {
         const updatedSeats = [...selectedSeats];
         updatedSeats.splice(index, 1);
@@ -39,7 +41,28 @@ export const MovieSelected = () => {
             setTotal(total / 0.8); // Removing 20% discount
         }
     };
+
+    const handleCheckoutClick = () => 
+    {
+        setShowCheckOutModal(true);
+    };
   
+    const handleModalAction = (action) => 
+    {
+        if (action === 'proceed') 
+        {
+          // Add your logic to proceed with the checkout
+          console.log('Proceeding with checkout...');
+          setShowCheckOutModal(false);
+        }
+        else
+        {
+            console.log('Canceled')
+            setShowCheckOutModal(false); 
+        }
+        
+    };
+
     return (
     <div className="container">
         <div className="seatSelection">
@@ -92,9 +115,25 @@ export const MovieSelected = () => {
                 <p>Name Movie: <span className='summaryDetails'>x{selectedSeats.length}</span></p>
                 <p>Total: <span className='summaryDetails'>{total}</span></p>
             </div>
-            <button className="checkoutButton">CHECKOUT</button>
+            <button className="checkoutButton" onClick={handleCheckoutClick}>
+                CHECKOUT
+            </button>
             <button className="goBackButton">GO BACK</button>
         </div>
+
+        
+      {showCheckOutModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>Proceed?</p>
+            <div className="modal-buttons">
+              <button className="yesButton" onClick={() => handleModalAction('proceed')}>YES</button>
+              <button className="noButton" onClick={() => handleModalAction('cancel')}>NO</button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
     );
   };
