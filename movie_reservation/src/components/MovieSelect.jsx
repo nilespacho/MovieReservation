@@ -21,9 +21,9 @@ const getMonthInWords = (dateString) => {
   return date.toLocaleDateString(undefined, options);
 };
 
-const MovieSelect = ({ selectedDate }) => {
+const MovieSelect = ({ selectedDate, onNextScreen }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [showTempDate, setShowTempDate] = useState(true); // Set to true initially
+  const [showTempDate, setShowTempDate] = useState(true); 
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,6 +38,11 @@ const MovieSelect = ({ selectedDate }) => {
     setShowTempDate(!showTempDate);
   };
 
+  // Function to handle clicking on the movie poster
+  const handleMovieClick = (movieId) => {
+    onNextScreen(movieId);
+  };
+
   return (
     <div>
       <div className="date-time">
@@ -47,7 +52,7 @@ const MovieSelect = ({ selectedDate }) => {
         {moviesData.map((movie, index) => (
           <div key={movie.id} className="movie-item">
             <div className="cinema-data">{cinemasData[index].name}</div>
-            <img src={movie.poster} alt={movie.title} />
+            <img src={movie.poster} alt={movie.title} onClick={() => handleMovieClick(movie.id)} />
             <div className="movie-info">
               <h2>{movie.title}</h2>
             </div>
