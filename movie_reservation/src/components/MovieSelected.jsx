@@ -1,58 +1,6 @@
 import React, { useState } from 'react';
 import '../stylesheets/MovieSelected.css';
 
-<<<<<<< HEAD
-export const MovieSelected = () => {
-    const REGPRICE = 350;
-    const [selectedSeats, setSelectedSeats] = useState([]);
-    const [selectedTime, setSelectedTime] = useState(null);
-    const [showCheckOutModal, setShowCheckOutModal] = useState(false);
-    const [total, setTotal] = useState(0);
-    const [showSeniorModal, setShowSeniorModal] = useState(false);
-    const [seniorCount, setSeniorCount] = useState(0);
-
-    const handleSeatClick = (seat) => {
-      const index = selectedSeats.indexOf(seat);
-      if (index === -1) 
-      {
-        setSelectedSeats([...selectedSeats, seat]);
-        setTotal(total + REGPRICE); 
-        console.log(seat);
-      } 
-      else 
-      {
-        const updatedSeats = [...selectedSeats];
-        updatedSeats.splice(index, 1);
-        setSelectedSeats(updatedSeats);
-        setTotal(total - REGPRICE);
-        console.log(seat);
-      }
-    };
-
-    const handleTimeClick = (time) => 
-    {
-        setSelectedTime(time);
-    };
-  
-    const handleSeniorClick = () => 
-    {
-        setShowSeniorModal(true);
-    };
-
-    const handleSeniorCountSubmit = () => 
-    {
-        setShowSeniorModal(false);
-        if (selectedSeats.length > 0) 
-        {
-            const total = (selectedSeats.length - seniorCount) * REGPRICE + seniorCount * (REGPRICE * 0.8);
-            setTotal(total < 0 ? 0 : total);
-        } 
-        else 
-        {
-            setTotal(0); 
-        }    
-    };
-=======
 export const MovieSelected = ({ selectedDate }) => {
   const REGPRICE = 350;
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -76,7 +24,6 @@ export const MovieSelected = ({ selectedDate }) => {
       console.log(seat);
     }
   };
->>>>>>> main
 
   const handleTimeClick = (time) => {
     setSelectedTime(time);
@@ -132,15 +79,10 @@ export const MovieSelected = ({ selectedDate }) => {
                 {col + 1}
               </div>
             ))}
-<<<<<<< HEAD
-            <div className="screen">SCREEN</div>
-        </div>
-=======
           </div>
         ))}
         <div className="screen">SCREEN</div>
       </div>
->>>>>>> main
 
       <div className="rightPanel">
         <div className="dateSelected">
@@ -170,17 +112,6 @@ export const MovieSelected = ({ selectedDate }) => {
           </button>
         </div>
 
-<<<<<<< HEAD
-        
-        {showCheckOutModal && (
-        <div className="modal">
-            <div className="modalContent">
-            <p>Proceed?</p>
-            <div className="checkoutModalButtons">
-                <button className="yesButton" onClick={() => handleModalAction('proceed')}>YES</button>
-                <button className="noButton" onClick={() => handleModalAction('cancel')}>NO</button>
-            </div>
-=======
         <div className="summary">
           <p>Name Movie: <span className='summaryDetails'>x{selectedSeats.length}</span></p>
           <p>Total: <span className='summaryDetails'>{total}</span></p>
@@ -198,30 +129,10 @@ export const MovieSelected = ({ selectedDate }) => {
             <div className="checkoutModalButtons">
               <button className="yesButton" onClick={() => handleModalAction('proceed')}>YES</button>
               <button className="noButton" onClick={() => handleModalAction('cancel')}>NO</button>
->>>>>>> main
             </div>
+          </div>
         </div>
-        )}
-
-        {showSeniorModal && (
-        <div className="modal">
-            <div className="modalContent">
-                <p className='seniorNumber'>Number of seniors:</p>
-                <input
-                    className='seniorInput'
-                    type="number"
-                    value={seniorCount}
-                    onChange={(e) => setSeniorCount(parseInt(e.target.value))}
-                    min="0"
-                />
-                <div className="seniorModalButton">
-                    <button className="submitButton" onClick={handleSeniorCountSubmit}>Submit</button>
-                </div>
-            </div>
-        </div>
-        )}
-
-
+      )}
 
       {showSeniorModal && (
         <div className="modal">
@@ -241,14 +152,7 @@ export const MovieSelected = ({ selectedDate }) => {
         </div>
       )}
     </div>
-<<<<<<< HEAD
-    );
-  };
-
-  export default MovieSelected;
-=======
   );
 };
 
 export default MovieSelected;
->>>>>>> main
