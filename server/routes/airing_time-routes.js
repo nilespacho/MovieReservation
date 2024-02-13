@@ -11,11 +11,15 @@
 
 // routes/airingTimeRoutes.js
 const express = require('express');
-const { addAiringTimes } = require('../controllers/airing_time-controllers');
+const { addAiringTimes, getAiringTimes } = require('../controllers/airing_time-controllers');
 
 const airingTimeRouter = express.Router();
 
+// Use POST to add AiringTimes
 airingTimeRouter.post('/addAiringTimes', addAiringTimes);
+
+// Use GET to retrieve AiringTimes
+airingTimeRouter.get('/', getAiringTimes);
 
 module.exports = airingTimeRouter;
 

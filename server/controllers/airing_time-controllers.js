@@ -47,6 +47,18 @@ const addAiringTimes = async (req, res) => {
     }
 };
 
+const getAiringTimes = async (req, res) => {
+    try {
+        // Fetch all AiringTimes
+        const airingTimes = await AiringTime.find();
+        res.json({ status: 'ok', airingTimes });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: 'error', error: err.message });
+    }
+};
+
 module.exports = {
     addAiringTimes,
+    getAiringTimes,
 };

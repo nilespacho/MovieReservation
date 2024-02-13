@@ -2,7 +2,7 @@ const Reservation = require("../model/Reservation");
 const express = require("express");
 const mongoose = require("mongoose");
 
-// Define your controller handler function
+// Define your controller handler function for adding a reservation
 const addReservation = async (req, res) => {
     try {
         const { mov_ID, airing_time, seats, total_price, is_cancelled } = req.body;
@@ -18,14 +18,13 @@ const addReservation = async (req, res) => {
         }
 
         // Create reservation
-const reservation = await Reservation.create({
-    mov_ID,
-    airing_time,
-    seats,
-    total_price,
-    is_cancelled
-});
-
+        const reservation = await Reservation.create({
+            mov_ID,
+            airing_time,
+            seats,
+            total_price,
+            is_cancelled
+        });
 
         res.json({ status: 'ok', reservation });
     } catch (err) {
@@ -34,8 +33,7 @@ const reservation = await Reservation.create({
     }
 };
 
-
-
+// Define your controller handler function for getting all reservations
 const getReservations = async (req, res) => {
     try {
         // Fetch all reservations
@@ -47,54 +45,57 @@ const getReservations = async (req, res) => {
     }
 };
 
+const deleteReservation = async (req, res) => {
+    try {
+        const reservationId = req.params.id;
+
+        // Check if the reservationId is a valid ObjectId
+        if (!mongoose.isValidObjectId(reservationId)) {
+            return res.status(400).json({ status: 'error', error: 'Invalid reservation ID' });
+        }
+
+        // Find and delete the reservation
+        const deletedReservation = await Reservation.findByIdAndDelete(reservationId);
+
+        if (!deletedReservation) {
+            return res.status(404).json({ status: 'error', error: 'Reservation not found' });
+        }
+
+        res.json({ status: 'ok', deletedReservation });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: 'error', error: err.message });
+    }
+}
+
+const getReservationById = async (req, res) => {
+    try {
+        const reservationId = req.params.id;
+
+        // Check if the reservationId is a valid ObjectId
+        if (!mongoose.isValidObjectId(reservationId)) {
+            return res.status(400).json({ status: 'error', error: 'Invalid reservation ID' });
+        }
+
+        // Find the reservation by ID
+        const reservation = await Reservation.findById(reservationId);
+
+        if (!reservation) {
+            return res.status(404).json({ status: 'error', error: 'Reservation not found' });
+        }
+
+        res.json({ status: 'ok', reservation });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: 'error', error: err.message });
+    }
+};
+
 // Export the named functions
 module.exports = {
     addReservation,
     getReservations,
-};
+    deleteReservation,
+    getReservationById,
+}
 
-
-
-
- 
-// const newReservation = async (req, res, next) => {
-//     const { movie, date, seatNumber } = req.body;
-  
-//     try {
-//       // Fetch the existingMovie from the database
-//       const existingMovie = await Movie.findById(movie);
-  
-//       if (!existingMovie) {
-//         return res.status(404).json({ message: "Movie not found" });
-//       }
-  
-//       // Ensure that existingMovie.reserve is an array
-//       existingMovie.reserve = existingMovie.reserve || [];
-  
-//       // Create a new Reservation instance
-//       const reserve = new Reservation({
-//         movie,
-//         date: new Date(`${date}`),
-//         seatNumber,
-//       });
-  
-//       const session = await mongoose.startSession();
-//       session.startTransaction();
-  
-//       // Push the new reservation to the existingMovie.reserve array
-//       existingMovie.reserve.push(reserve);
-  
-//       await existingMovie.save({ session });
-//       await reserve.save({ session });
-  
-//       session.commitTransaction();
-  
-//       return res.status(200).json({ reserve });
-//     } catch (err) {
-//       console.error(err);
-//       return res.status(500).json({ message: "Unable to create a booking" });
-//     }
-//   };
-  
-//   module.exports = newReservation;
-  
