@@ -1,40 +1,59 @@
-const Reservation = require("../model/Reservation")
-const express = require("express")
-const mongoose = require("mongoose")
-const addReservation = express.Router()
+const Reservation = require("../model/Reservation");
+const express = require("express");
+const mongoose = require("mongoose");
 
-addReservation.post('/addReservation', async (req, res) => {
-    console.log(req.body);
+// Define your controller handler function
+const addReservation = async (req, res) => {
     try {
-        const { mov_ID, airing_time, seat, discount, total_price, is_cancelled } = req.body;
+        const { mov_ID, airing_time, seats, total_price, is_cancelled } = req.body;
 
-        // Ensure correct data types
-        const isValidObjectId = mongoose.Types.ObjectId.isValid(mov_ID);
-        if (!isValidObjectId) {
-            return res.status(400).json({ status: 'error', error: 'Invalid mov_ID' });
+        // Check if mov_ID and airing_time are valid ObjectId strings
+        if (!mongoose.isValidObjectId(mov_ID) || !mongoose.isValidObjectId(airing_time)) {
+            return res.status(400).json({ status: 'error', error: 'Invalid mov_ID or airing_time' });
         }
 
-        if (!Array.isArray(seat)
- || seat.some(item => typeof item !== 'object')) {
+        // Validate seat data
+        if (!Array.isArray(seats) || seats.some(item => typeof item !== 'string')) {
             return res.status(400).json({ status: 'error', error: 'Invalid seat data' });
         }
 
-        const reservation = await Reservation.create({
-            mov_ID: mongoose.Types.ObjectId(mov_ID),
-            airing_time: mongoose.Types.ObjectId(airing_time), 
-            seat,
-            discount,
-            total_price,
-            is_cancelled
-        });
+        // Create reservation
+const reservation = await Reservation.create({
+    mov_ID,
+    airing_time,
+    seats,
+    total_price,
+    is_cancelled
+});
+
+
         res.json({ status: 'ok', reservation });
     } catch (err) {
         console.error(err);
         res.status(500).json({ status: 'error', error: err.message });
     }
-});
+};
 
-module.exports = addReservation;
+
+
+const getReservations = async (req, res) => {
+    try {
+        // Fetch all reservations
+        const reservations = await Reservation.find();
+        res.json({ status: 'ok', reservations });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: 'error', error: err.message });
+    }
+};
+
+// Export the named functions
+module.exports = {
+    addReservation,
+    getReservations,
+};
+
+
 
 
  

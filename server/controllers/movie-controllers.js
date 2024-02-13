@@ -3,7 +3,7 @@ const Movie = require('../model/Movie');
 // Get all movies
 const getAllMovies = async (req, res) => {
   try {
-    const movies = await Movie.find().populate('airing_time');
+    const movies = await Movie.find();
     res.json({ status: 'ok', movies });
   } catch (err) {
     console.error(err);
@@ -15,7 +15,7 @@ const getAllMovies = async (req, res) => {
 const getMovieById = async (req, res) => {
   try {
     const { id } = req.params;
-    const movie = await Movie.findById(id).populate('airing_time');
+    const movie = await Movie.findById(id);
     if (!movie) {
       return res.status(404).json({ status: 'error', error: 'Movie not found' });
     }
@@ -29,13 +29,7 @@ const getMovieById = async (req, res) => {
 // Create a new movie
 const createMovie = async (req, res) => {
   try {
-    const { title, genre, poster, director, releaseYear/*, airing_time*/ } = req.body;
-
-    // Check if airing_time exists
-    // const airingTimeExists = await AiringTime.findById(airing_time);
-    // if (!airingTimeExists) {
-    //   return res.status(400).json({ status: 'error', error: 'Invalid airing_time ID' });
-    // }
+    const { title, genre, poster, director, releaseYear} = req.body;
 
     const movie = await Movie.create({
       title,
@@ -43,7 +37,6 @@ const createMovie = async (req, res) => {
       poster,
       director,
       releaseYear,
-    //   airing_time,
     });
 
     res.json({ status: 'ok', movie });
@@ -57,19 +50,13 @@ const createMovie = async (req, res) => {
 const updateMovie = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, genre, poster, director, releaseYear/*, airing_time*/} = req.body;
-
-    // Check if airing_time exists
-    // const airingTimeExists = await AiringTime.findById(airing_time);
-    // if (!airingTimeExists) {
-    //   return res.status(400).json({ status: 'error', error: 'Invalid airing_time ID' });
-    // }
+    const { title, genre, poster, director, releaseYear} = req.body;
 
     const updatedMovie = await Movie.findByIdAndUpdate(
       id,
-      { title, genre, poster, director, releaseYear/*, airing_time*/},
+      { title, genre, poster, director, releaseYear},
       { new: true }
-    )/*.populate('airing_time');*/
+    )
 
     if (!updatedMovie) {
       return res.status(404).json({ status: 'error', error: 'Movie not found' });

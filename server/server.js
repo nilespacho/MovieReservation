@@ -2,7 +2,7 @@ const express = require('express');
 const port = process.env.PORT || 5000;
 const mongoose = require('mongoose')
 const cors = require('cors');
-const addReservation = require('./controllers/reservation-controller')
+const reservationRouter = require('./routes/reservation-routes')
 const airing_time = require('./routes/airing_time-routes')
 const movieRoutes = require('./routes/movie-routes');
 const app = express();
@@ -15,8 +15,6 @@ app.use(express.json());
 require("dotenv").config();
 app.listen(port, () => console.log(`Node JS Server is running on port ${port}`));
 
-var database
-
 // Connect to MongoDB using Mongoose
 
 mongoose.connect(`${process.env.MONGODB_URI}`, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -27,7 +25,7 @@ mongoose.connect(`${process.env.MONGODB_URI}`, { useNewUrlParser: true, useUnifi
         console.error('Error connecting to MongoDB:', error);
     });
 
-app.use("/api/reservation", addReservation)
+app.use('/api/reservation', reservationRouter);
 app.use("/api/airing-time", airing_time);
 app.use('/api/movies', movieRoutes);
 

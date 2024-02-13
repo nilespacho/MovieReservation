@@ -26,12 +26,26 @@ const mongoose = require('mongoose');
 const reservationSchema = new mongoose.Schema({
     mov_ID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Movie', // Reference to the Movie model
+        ref: 'Movie',
         required: true,
+        validate: {
+            validator: async function (value) {
+                const movie = await mongoose.model('Movie').findById(value);
+                return movie !== null;
+            },
+            message: 'Invalid mov_ID. Movie not found.',
+        },
     },
     airing_time: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'AiringTime', // Reference to the AiringTime model
+        ref: 'AiringTime',
+        validate: {
+            validator: async function (value) {
+                const airingTime = await mongoose.model('AiringTime').findById(value);
+                return airingTime !== null;
+            },
+            message: 'Invalid airing_time. AiringTime not found.',
+        },
     },
     seats: {
         type: [String], // Assuming seats are represented as strings

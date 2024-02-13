@@ -1,8 +1,12 @@
-const express = require('express'); // Import express correctly
-const { addReservation } = require('../controllers/reservation-controller');
+// reservation-routes.js
+
+const express = require('express');
+const { addReservation, getReservations } = require('../controllers/reservation-controller');
 
 const reservationRouter = express.Router();
 
-reservationRouter.post('/', addReservation); // Use the correct function name
+// Add the POST and GET endpoints
+reservationRouter.post('/addReservation', addReservation);
+reservationRouter.get('/getReservations', getReservations);
 
 module.exports = reservationRouter;
