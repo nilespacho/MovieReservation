@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import '../stylesheets/MovieSelect.css';
 
 const cinemasData = [
@@ -21,54 +21,61 @@ const getMonthInWords = (dateString) => {
   return date.toLocaleDateString(undefined, options);
 };
 
-const MovieSelect = ({ selectedDate, onNextScreen }) => {
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [showTempDate, setShowTempDate] = useState(true); 
+class MovieSelect extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentTime: new Date(),
+      showTempDate: true
+    };
+  }
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(new Date());
+  componentDidMount() {
+    this.interval = setInterval(() => {
+      this.setState({ currentTime: new Date() });
     }, 1000);
+  }
 
-    return () => clearInterval(interval);
-  }, []);
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
-  // Function to toggle the temporary date display
-  const toggleTempDate = () => {
-    setShowTempDate(!showTempDate);
+  toggleTempDate = () => {
+    this.setState((prevState) => ({ showTempDate: !prevState.showTempDate }));
   };
 
-  // Function to handle clicking on the movie poster
-  const handleMovieClick = (movieId) => {
-    onNextScreen(movieId);
+  handleMovieClick = (movieId) => {
+    this.props.onNextScreen(movieId);
   };
 
-  return (
-    <div>
-      <div className="date-time">
-        <h2 className="current-time">{currentTime.toLocaleTimeString()}</h2>
-      </div>
-      <div className="movie-grid">
-        {moviesData.map((movie, index) => (
-          <div key={movie.id} className="movie-item">
-            <div className="cinema-data">{cinemasData[index].name}</div>
-            <img src={movie.poster} alt={movie.title} onClick={() => handleMovieClick(movie.id)} />
-            <div className="movie-info">
-              <h2>{movie.title}</h2>
-            </div>
-          </div>
-        ))}
-      </div>
-      {/* Button to toggle the temporary date */}
-      <button onClick={toggleTempDate}>Toggle Temp Date</button>
-      {/* Conditionally render the temporary date */}
-      {showTempDate && (
-        <div className="date">
-          <h1>{getMonthInWords(selectedDate)}</h1>
+  render() {
+    const { selectedDate } = this.props;
+    const { currentTime, showTempDate } = this.state;
+
+    return (
+      <div>
+        <div className="date-time">
+          <h2 className="current-time">{currentTime.toLocaleTimeString()}</h2>
         </div>
-      )}
-    </div>
-  );
-};
+        <div className="movie-grid">
+          {moviesData.map((movie, index) => (
+            <div key={movie.id} className="movie-item">
+              <div className="cinema-data">{cinemasData[index].name}</div>
+              <img src={movie.poster} alt={movie.title} onClick={() => this.handleMovieClick(movie.id)} />
+              <div className="movie-info">
+                <h2>{movie.title}</h2>
+              </div>
+            </div>
+          ))}
+        </div>
+        {showTempDate && (
+          <div className="date">
+            <h1>{getMonthInWords(selectedDate)}</h1>
+          </div>
+        )}
+      </div>
+    );
+  }
+}
 
 export default MovieSelect;
