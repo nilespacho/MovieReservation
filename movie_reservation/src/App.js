@@ -23,6 +23,7 @@ function App() {
           <Route exact path="/" element={<Calendar />} />
           <Route path="/niles/:movieId" element={<MovieSelected selectedDate={selectedDate} />} />
           <Route path="/gi" element={<MovieSelect selectedDate={selectedDate} onSelectedDate={handleSelectedDate} />} />
+          <Route path='/reservation' element={<ReservationList/>} />
         </Routes>
       </Router>
     </div>
