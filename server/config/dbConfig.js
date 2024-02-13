@@ -1,3 +1,6 @@
+
+
+
 //Import the mongoose
 const mongoose = require('mongoose');
 //Connect mongoose with the object.
@@ -12,3 +15,5 @@ console.log('MongoDB connection Successful');
 connection.on('error', (err)=>{
 console.log('MongoDB Connection Failed');
 })
+
+
