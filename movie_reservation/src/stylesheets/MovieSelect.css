@@ -18,6 +18,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* padding: 20px; */
 }
 
 .current-time {
@@ -32,9 +33,11 @@ body {
 .movie-grid {
   display: flex;
   justify-content: center;
+  /* align-items: center; */
   flex-wrap: wrap;
   gap: 70px;
   padding: 10px;
+  /* height: 100vh; */
 }
 
 .movie-item {
