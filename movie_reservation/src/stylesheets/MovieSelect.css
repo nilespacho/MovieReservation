@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+body {
+  background-color: #2C3E50; /* Dark blue-gray background reminiscent of a cinema's ambiance */
+}
+
+.date {
+  position: absolute;
+  font-family: 'Inter', sans-serif;
+  top: 50px; 
+  left: 50%; 
+  transform: translateX(-50%);
+  font-size: 25px;
+  color: #FFFFFF; /* White text for better contrast on dark background */
+}
+
+.date-time {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* padding: 20px; */
+}
+
+.current-time {
+  font-family: 'Inter', sans-serif;
+  font-size: 28px;
+  position: absolute;
+  top: 5px;
+  right: 20px; 
+  color: #FFFFFF; /* White text for better contrast on dark background */
+}
+
+.movie-grid {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  flex-wrap: wrap;
+  gap: 70px;
+  padding: 10px;
+  /* height: 100vh; */
+}
+
+.movie-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.movie-item img {
+  width: 100%; 
+  max-width: 230px; 
+  height: auto; 
+  border-radius: 8px;
+  margin-bottom: 10px; 
+  transition: transform 0.3s ease; 
+}
+
+.movie-item:hover img {
+  transform: translateY(-10px); 
+}
+
+.cinema-data {
+  font-family: 'Inter', sans-serif;
+  font-size: 55px;
+  text-align: center;
+  margin-bottom: 40px; 
+  margin-top: 180px;  
+  color: #E74C3C; /* Red color for cinema name, reminiscent of theater curtains */
+}
+
+.movie-info h2 {
+  margin-top: 10px;
+  text-align: left;
+  font-family: 'Inter', sans-serif; 
+  font-size: 24px;
+  font-weight: bold;
+  color: #ECF0F1; /* Light gray text for movie titles */
+}
+
+@media (max-width: 990px) {
+  .movie-item {
+    width: calc(50% - 232px);
+  }
+}
+
+@media (max-width: 670px) {
+  .movie-item {
+    width: calc(100% - 232px);
+  }
+}

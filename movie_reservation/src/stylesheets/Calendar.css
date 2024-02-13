@@ -1,4 +1,11 @@
-
+.Calendar {
+    /* margin-top: 10px; */
+    display: flex;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    justify-content: center;
+    height: 100vh;
+}
 
 .calendar {
     width: 900px;
@@ -6,9 +13,9 @@
     display: flex;
     position:absolute;
     flex-direction: column;
-    background-color: #EEEDEB;
-    border: 1px solid black;
-    border-radius: 5%;
+    background-color: #F4F4F4; /* Light gray background */
+    border: 1px solid #DADADA; /* Light gray border */
+    border-radius: 10px; /* Rounded corners */
     padding-left: 3px;
     overflow: auto;
 }
@@ -19,10 +26,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #F0F0F0; /* Header background color */
 }
 
 .calendar-header h2 {
     text-transform: uppercase;
+    color: #333333; /* Dark gray text color */
 }
 
 .calendar-body {
@@ -36,17 +45,15 @@
     height: 3.4rem;
     width: 100%;
     display: flex;
-    /* align-items: center; */
     justify-content: space-around;
-
 }
 
 .weekday {
     width: 100px;
     height: 39px;
     text-align: center;
-    background-color: #747264;
-    border-radius: 10%;
+    background-color: #747264; /* Dark gray weekday background */
+    border-radius: 10px; /* Rounded corners */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -62,10 +69,8 @@
     flex-grow: 1;
     display: flex;
     flex-wrap: wrap;
-    /* justify-content: center; */
     box-sizing: border-box;
     gap: 30px;
-    /* overflow: hidden; */
     padding-left: 0.3rem;
 }
 
@@ -73,26 +78,24 @@
     width: 100px;
     height: 75px;
     position: relative;
-    border-radius: 10%;
+    border-radius: 10px; /* Rounded corners */
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 3em;
-    /* border: 1px solid #a6a6a6; */
 }
 
 .calendar-day:hover {
-    background-color: rgba(0,0,0,.10);
+    background-color: rgba(0, 0, 0, .10); /* Light gray hover effect */
 }
 
 .calendar-day p {
     position: absolute;
-    /* right: 15px; */
-    color: #a6a6a6;
+    color: #333333; /* Dark gray text color */
 }
 
 .current {
-    background-color: #E0CCBE;
+    background-color: #E0CCBE; /* Light brown current day background color */
     border: 1px solid #a6a6a6;
 }
 
@@ -101,6 +104,6 @@
 }
 
 .selected p {
-    color: #cc0000;
+    color: #cc0000; /* Red selected day text color */
     font-weight: bold;
 }
