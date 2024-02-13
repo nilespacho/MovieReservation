@@ -6,6 +6,7 @@ import MovieList from './pages/MovieList';
 import Home from './pages/Home';
 import ProtectedRoute from './components/ProtectedRoute';
 import MovieSelected from './components/MovieSelected';
+import ReservationList from './components/ReservationList';
 
 // function App() {
 //   return (
@@ -30,7 +31,8 @@ function App() {
   {/* <Route path="movies" element={<ProtectedRoute><MovieList/></ProtectedRoute>}/> */}
   </Routes>
   </BrowserRouter>
-  <main className='Calendar'><MovieSelected/></main>
+  {/* <main className='ReservationList'><MovieSelected/></main> */}
+  <main className='ReservationList'><ReservationList/></main>
   </div>
   );
   }

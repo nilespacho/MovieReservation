@@ -16,6 +16,7 @@ export const MovieSelected = () => {
       {
         setSelectedSeats([...selectedSeats, seat]);
         setTotal(total + REGPRICE); 
+        console.log(seat);
       } 
       else 
       {
@@ -23,6 +24,7 @@ export const MovieSelected = () => {
         updatedSeats.splice(index, 1);
         setSelectedSeats(updatedSeats);
         setTotal(total - REGPRICE);
+        console.log(seat);
       }
     };
 
@@ -39,9 +41,15 @@ export const MovieSelected = () => {
     const handleSeniorCountSubmit = () => 
     {
         setShowSeniorModal(false);
-        // Calculate the total price based on the input provided by the user
-        const total = (selectedSeats.length - seniorCount) * REGPRICE + seniorCount * (REGPRICE * 0.8);
-        setTotal(total);
+        if (selectedSeats.length > 0) 
+        {
+            const total = (selectedSeats.length - seniorCount) * REGPRICE + seniorCount * (REGPRICE * 0.8);
+            setTotal(total < 0 ? 0 : total);
+        } 
+        else 
+        {
+            setTotal(0); 
+        }    
     };
 
     const handleCheckoutClick = () => 
@@ -82,8 +90,8 @@ export const MovieSelected = () => {
                 ))}
             </div>
             ))}
-        <div className="screen">SCREEN</div>
-    </div>
+            <div className="screen">SCREEN</div>
+        </div>
 
         <div className="rightPanel">
             <div className="dateSelected">
@@ -145,6 +153,7 @@ export const MovieSelected = () => {
                     type="number"
                     value={seniorCount}
                     onChange={(e) => setSeniorCount(parseInt(e.target.value))}
+                    min="0"
                 />
                 <div className="seniorModalButton">
                     <button className="submitButton" onClick={handleSeniorCountSubmit}>Submit</button>
