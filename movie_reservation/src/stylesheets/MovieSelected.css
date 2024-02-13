@@ -150,10 +150,7 @@
 }
 
 .modalContent {
-<<<<<<< HEAD
-=======
   margin: auto;
->>>>>>> main
   width: 500px; 
   height: 250px; 
   background-color: #D9D9D9;
@@ -291,11 +288,7 @@
   }
 
   .checkoutModalButtons button {
-<<<<<<< HEAD
-    width: 150px; 
-=======
     width: 110px; 
->>>>>>> main
     height: 60px; 
     font-size: 20px; 
     margin: 0 5px; 

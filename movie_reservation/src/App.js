@@ -17,28 +17,16 @@ function App() {
   };
 
   return (
-<<<<<<< HEAD
-  <div>
-  <BrowserRouter>
-  <Routes>
-  {/* <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}/> */}
-  {/* <Route path="movies" element={<ProtectedRoute><MovieList/></ProtectedRoute>}/> */}
-  </Routes>
-  </BrowserRouter>
-  {/* <main className='ReservationList'><MovieSelected/></main> */}
-  <main className='ReservationList'><ReservationList/></main>
-  </div>
-=======
     <div>
       <Router>
         <Routes>
           <Route exact path="/" element={<Calendar />} />
           <Route path="/niles/:movieId" element={<MovieSelected selectedDate={selectedDate} />} />
           <Route path="/gi" element={<MovieSelect selectedDate={selectedDate} onSelectedDate={handleSelectedDate} />} />
+          <Route path='/reservation' element={<ReservationList/>} />
         </Routes>
       </Router>
     </div>
->>>>>>> main
   );
 }
 

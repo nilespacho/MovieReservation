@@ -58,7 +58,29 @@ const getAiringTimes = async (req, res) => {
     }
 };
 
+const getAiringTimeById = async (req, res) => {
+    try {
+        // Extract the ID from the request parameters
+        const { id } = req.params;
+
+        // Find the AiringTime by ID
+        const airingTime = await AiringTime.findById(id);
+
+        // Check if the airingTime exists
+        if (!airingTime) {
+            return res.status(404).json({ status: 'error', message: 'AiringTime not found' });
+        }
+
+        // Send the response with the AiringTime
+        res.json({ status: 'ok', airingTime });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: 'error', error: err.message });
+    }
+};
+
 module.exports = {
     addAiringTimes,
     getAiringTimes,
+    getAiringTimeById,
 };
