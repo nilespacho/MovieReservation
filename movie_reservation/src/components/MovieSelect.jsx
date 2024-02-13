@@ -18,7 +18,7 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/movies')
+    axios.get('http://localhost:5000/api/movies')
       .then((response) => setMovies(response.data))
       .catch((err) => console.log(err));
 
@@ -47,7 +47,7 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
         <h2 className="current-time">{currentTime.toLocaleTimeString()}</h2>
       </div>
       <div className="movie-grid">
-        {movies && movies.map((movie, index) => (
+        {movies.movies && movies.movies.map((movie, index) => (
           <div key={movie.id} className="movie-item">
             <div className="cinema-data">{cinemasData[index].name}</div>
             <img src={movie.poster} alt={movie.title} onClick={() => handleMovieClick(movie._id)} />
