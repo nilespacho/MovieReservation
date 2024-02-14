@@ -17,18 +17,6 @@ function App() {
   };
 
   return (
-<<<<<<< HEAD
-  <div>
-  <BrowserRouter>
-  <Routes>
-  {/* <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}/> */}
-  {/* <Route path="movies" element={<ProtectedRoute><MovieList/></ProtectedRoute>}/> */}
-  </Routes>
-  </BrowserRouter>
-  {/* <main className='ReservationList'><MovieSelected/></main> */}
-  <main className='ReservationList'><ReservationList/></main>
-  </div>
-=======
     <div>
       <Router>
         <Routes>
@@ -38,7 +26,6 @@ function App() {
         </Routes>
       </Router>
     </div>
->>>>>>> main
   );
 }
 
