@@ -24,7 +24,9 @@ export const MovieSelected = ({ selectedDate }) => {
   const [movieId, setMovieId] = useState(null);
 
   const [showCountdownModal, setShowCountdownModal] = useState(false);
-  let premierCheck
+  const [premierCheck, setPremierCheck] = useState(false);
+  const [premierDate, setPremierDate] = useState(null);
+
   
   
   
@@ -89,9 +91,83 @@ export const MovieSelected = ({ selectedDate }) => {
 
 
   
-  const handleTimeClick = (time) => {
+  // const handleTimeClick = (time) => {
+  //   setSelectedTime(time);
+  //   selectedTimeId = time;
+  
+  //   // Check if the clicked time exists in the reservations for the same movie
+  //   const isReserved = reservedTime.some(reservation => 
+  //     reservation.airing_time === selectedTimeId && reservation.mov_ID === movieId
+  //   );
+  
+  //   console.log('All Reservations:', reservedTime);
+  
+  //   if (isReserved) {
+  //     console.log(`Reserved Time: ${reservedTime}`);
+  //   } else {
+  //     console.log('This time is not reserved for the selected movie');
+  //   }
+  // };
+
+  const handleTimeClick = async (time) => {
     setSelectedTime(time);
     selectedTimeId = time;
+  
+    // Fetch the premiere date after clicking a time
+    try {
+      const response = await axios.get(`http://localhost:5000/api/movies/${movieId}`);
+      // if (response.data && response.data.movie) {
+      //   const movie = response.data.movie; // Directly access the movie object
+      //   const premierDateCheck = movie ? movie.premiereDate : null;
+      //   console.log(`premiereDate: ${premierDate}`)
+      //   console.log(`premiereDateCheck: ${premierDateCheck}`)
+      //   console.log(`selectedDate: ${selectedDate}`)
+      //   // Check if the movie is a premier and if selectedDate matches the premierDate of the movie
+      //   if (premierDate && selectedDate === premierDateCheck) {
+      //     // If the movie is a premier and selectedDate matches the premierDate, set premierCheck flag to true
+      //     console.error('Premier set true');
+      //     setPremierCheck(true);
+      //   } else {
+      //     // If not a premier or selectedDate doesn't match, set premierCheck flag to false
+      //     console.error('Premier set false');
+      //     setPremierCheck(false);
+      //   }
+      // } else {
+      //   console.error('Error: No movie data found in the response');
+      // }
+      if (response.data && response.data.movie) {
+        const movie = response.data.movie; // Directly access the movie object
+        const premierDateCheck = movie ? movie.premiereDate : null;
+        const premierConvertedTime = movie ? new Date(movie.premiereDate).toLocaleDateString('en-US') : null;
+        const selectedDateFormatted = selectedDate.toLocaleDateString('en-US');
+        
+        console.log(`premiereDate: ${premierDate}`);
+        console.log(`premiereDateCheck: ${premierDateCheck}`);
+        console.log(`selectedDate: ${selectedDateFormatted}`);
+        
+        // Check if the movie is a premier and if selectedDate matches the premierDate of the movie
+        if ((premierDate && premierDateCheck) && (selectedDateFormatted && premierConvertedTime)) {
+          if(movie.airing_time === selectedTimeId) {
+            // If the movie is a premier and selectedDate matches the premierDate, set premierCheck flag to true
+          console.error('Premier set true');
+          setPremierCheck(true);
+          } else {
+            console.error('Premier set false');
+          setPremierCheck(false);
+          }
+        } else {
+          // If not a premier or selectedDate doesn't match, set premierCheck flag to false
+          console.error('Premier set false');
+          setPremierCheck(false);
+        }
+      } else {
+        console.error('Error: No movie data found in the response');
+      }
+      
+    } catch (error) {
+      console.error('Error fetching premiere date:', error);
+      // Handle errors appropriately
+    }
   
     // Check if the clicked time exists in the reservations for the same movie
     const isReserved = reservedTime.some(reservation => 
@@ -106,6 +182,37 @@ export const MovieSelected = ({ selectedDate }) => {
       console.log('This time is not reserved for the selected movie');
     }
   };
+  
+  
+
+  const getPremierDate = async (movieId) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/movies/${movieId}`);
+      const movie = response.data.movie
+      return movie ? movie.premiereDate : null;
+    } catch (error) {
+      console.error(`Error fetching premiere date for movie ${movieId}:`, error);
+      return null;
+    }
+  };
+  
+  
+
+  useEffect(() => {
+    if (movieId) {
+      const fetchPremierDate = async () => {
+        try {
+          const premierDate = await getPremierDate(movieId);
+          setPremierDate(premierDate);
+        } catch (error) {
+          console.error('Error fetching premier date:', error);
+        }
+      };
+  
+      fetchPremierDate();
+    }
+  }, [movieId]);
+  
   
   
   
@@ -194,22 +301,6 @@ export const MovieSelected = ({ selectedDate }) => {
     setShowCheckOutModal(false);
   }
   };
-  
-
-  // const handleModalAction = (action) => {
-  //   if (action === 'proceed') {
-  //     // Add your logic to proceed with the checkout
-  //     console.log('Proceeding with checkout...');
-  //     useEffect(() =>{
-        
-  //     })
-
-  //     setShowCheckOutModal(false);
-  //   } else {
-  //     console.log('Canceled');
-  //     setShowCheckOutModal(false);
-  //   }
-  // };
 
   const getMonthInWords = (dateString) => {
     const date = new Date(dateString);
@@ -218,39 +309,10 @@ export const MovieSelected = ({ selectedDate }) => {
     return time;
   };
 
-  const [premierDate, setPremierDate] = useState(null);
 
-  const getPremierDate = async (movieId) => {
-    console.log(`Check movie id ${movieId}`);
-    try {
-      const response = await axios.get(`http://localhost:5000/api/movies/${movieId}`);
-      const movie = response.data.movie;
-      console.log(`Check ${movie.premierDate}`);
-      return movie ? movie.premierDate : null; // Corrected property name
-    } catch (error) {
-      console.error(`Error fetching premier date for movie ${movieId}:`, error);
-      return null;
-    }
-  };
-  
 
-  useEffect(() => {
-    console.log("Inside useEffect for fetching premier date");
-    if (movieId) {
-      const fetchPremierDate = async () => {
-        try {
-          const premierDate = await getPremierDate(movieId);
-          setPremierDate(premierDate);
-        } catch (error) {
-          console.error('Error fetching premier date:', error);
-        }
-      };
   
-      fetchPremierDate();
-      setMovieId(movieId);
-      console.log(`MovieID ${movieId}`);
-    }
-  }, [location.state]);
+  
 
 
   
@@ -310,13 +372,14 @@ export const MovieSelected = ({ selectedDate }) => {
         </div> */}
 
       {console.log(`selectedDate: ${premierDate}`)}
-      <div className='senior'>
-  {selectedTime !== premierDate /* && premierDate */ && (
+      {!premierCheck && (
+  <div className='senior'>
     <button className="seniorButton" onClick={handleSeniorClick}>
       SENIOR
     </button>
-  )}
-</div>
+  </div>
+)}
+
 
       
 
