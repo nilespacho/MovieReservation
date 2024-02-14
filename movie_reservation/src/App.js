@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import ProtectedRoute from './components/ProtectedRoute';
 import MovieSelect from './components/MovieSelect';
 import MovieSelected from './components/MovieSelected';
+import ReservationList from './components/ReservationList';
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/" element={<Calendar />} />
           <Route path="/niles/:movieId" element={<MovieSelected selectedDate={selectedDate} />} />
           <Route path="/gi" element={<MovieSelect selectedDate={selectedDate} onSelectedDate={handleSelectedDate} />} />
+          <Route path='/reservation' element={<ReservationList/>} />
         </Routes>
       </Router>
     </div>
