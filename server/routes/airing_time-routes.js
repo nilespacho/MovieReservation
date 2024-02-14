@@ -11,7 +11,7 @@
 
 // routes/airingTimeRoutes.js
 const express = require('express');
-const { addAiringTimes, getAiringTimes } = require('../controllers/airing_time-controllers');
+const { addAiringTimes, getAiringTimes, getAiringTimeById } = require('../controllers/airing_time-controllers');
 
 const airingTimeRouter = express.Router();
 
@@ -20,6 +20,8 @@ airingTimeRouter.post('/addAiringTimes', addAiringTimes);
 
 // Use GET to retrieve AiringTimes
 airingTimeRouter.get('/', getAiringTimes);
+
+airingTimeRouter.get('/:id', getAiringTimeById);
 
 module.exports = airingTimeRouter;
 
