@@ -1,3 +1,4 @@
+
 .Calendar {
     /* margin-top: 10px; */
     display: flex;
@@ -5,33 +6,51 @@
     flex-grow: 1;
     justify-content: center;
     height: 100vh;
+    background-image: url("mainn.png");
+    background-size:cover;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 .calendar {
-    width: 900px;
-    height: max-content;
+    width: 1000px;
+    height: 470px;
     display: flex;
+    top: 160px;
     position:absolute;
     flex-direction: column;
-    background-color: #F4F4F4; /* Light gray background */
-    border: 1px solid #DADADA; /* Light gray border */
-    border-radius: 10px; /* Rounded corners */
+    background-color: #09131E;
+    background: #09131E;
+    border: 0.25px solid #CA2222;
+    box-shadow: 0px 16px 32px rgba(202, 34, 34, 0.25);
+    border-radius: 50px;
     padding-left: 3px;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .calendar-header {
-    height: 3rem;
-    width: 100%;
+    box-sizing: border-box;
+    width: 550px;
+    height: 100px;
+    position: fixed;
+    top: 25%; /* Position at 50% from the top */
+    left: 50%; /* Position at 50% from the left */
+    transform: translate(-50%, -50%); /* Center the element */
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #F0F0F0; /* Header background color */
+    background-color: #09131E; /* Header background color */
+    border: 0.15px solid #CA2222;
+    box-shadow: inset 0px -16px 32px rgba(202, 34, 34, 0.25);
+    border-radius: 20px;
 }
+
 
 .calendar-header h2 {
     text-transform: uppercase;
-    color: #333333; /* Dark gray text color */
+    font-size: 60px;
+    font-weight: 1000;
+    color: #ffffff; 
 }
 
 .calendar-body {
@@ -42,18 +61,18 @@
 }
 
 .table-header {
-    height: 3.4rem;
+    height: 5.5rem;
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 40px;
+    
 }
 
 .weekday {
     width: 100px;
-    height: 39px;
+    height: 130px;
     text-align: center;
-    background-color: #747264; /* Dark gray weekday background */
-    border-radius: 10px; /* Rounded corners */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -62,27 +81,30 @@
 .weekday p {
     color: white;
     text-transform: uppercase;
+    font-size: 22px;
+    font-weight: bold;
 }
 
 .table-content {
     width: 100%;
-    flex-grow: 1;
+    margin-left: 20px;
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
-    gap: 30px;
+    gap: 40px;
     padding-left: 0.3rem;
 }
 
 .calendar-day {
     width: 100px;
-    height: 75px;
+    height: 40px;
     position: relative;
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 3em;
+    font-size: 2em;
+    font-weight: 800;
 }
 
 .calendar-day:hover {
@@ -95,7 +117,7 @@
 }
 
 .current {
-    background-color: #E0CCBE; /* Light brown current day background color */
+    background-color: #ffffff; /* Light brown current day background color */
     border: 1px solid #a6a6a6;
 }
 

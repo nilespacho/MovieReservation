@@ -46,7 +46,7 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
       <div className="date-time">
         <h2 className="current-time">{currentTime.toLocaleTimeString()}</h2>
       </div>
-      <div className="movie-grid">
+      <div className="movie-grid">  
         {movies.movies && movies.movies.map((movie, index) => (
           <div key={movie.id} className="movie-item">
             <div className="cinema-data">{cinemasData[index].name}</div>
