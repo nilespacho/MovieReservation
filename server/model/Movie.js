@@ -7,6 +7,8 @@ const movieSchema = new mongoose.Schema({
     poster: { type: String, required: true },
     director: { type: String, required: true },
     releaseYear: { type: Number, required: true },
+    is_premier: { type: Boolean, required: true},
+    premiereDate: { type: Date, required: false },
     // airing_time: {
     //     type: mongoose.Schema.Types.ObjectId,
     //     ref: 'AiringTime', // Reference to the AiringTime model

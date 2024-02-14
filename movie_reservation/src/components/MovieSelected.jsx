@@ -7,6 +7,7 @@ import axios from 'axios';
 export const MovieSelected = ({ selectedDate }) => {
   const navigate = useNavigate();
   const REGPRICE = 350;
+  const PREMIERPRICE = 500;
   const [selectedSeats, setSelectedSeats] = useState([]);
   let [selectedTime, setSelectedTime] = useState('');
   let selectedTimeId
@@ -308,6 +309,8 @@ export const MovieSelected = ({ selectedDate }) => {
         </div>
       )}
 
+
+  {/* not workingyet */}
       {/* Countdown modal */}
       {showCountdownModal && (
         <div className="countdown-modal">
