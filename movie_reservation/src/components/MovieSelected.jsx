@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, navigate } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import '../stylesheets/MovieSelected.css';
 import axios from 'axios';
 
 export const MovieSelected = ({ selectedDate }) => {
-  const navigate = useNavigate();
   const REGPRICE = 350;
-  const PREMIERPRICE = 500;
   const [selectedSeats, setSelectedSeats] = useState([]);
   let [selectedTime, setSelectedTime] = useState('');
   let selectedTimeId
@@ -248,20 +246,19 @@ export const MovieSelected = ({ selectedDate }) => {
 
               {/* {console.log(formattedAiringTime)} */}
       <div className="rightPanel">
-        <div className="dateSelected">
-          <p>{selectedDate ? getMonthInWords(selectedDate) : ''}</p>
-          <div className="timeSchedule">
-            {formattedAiringTime.map((time) => (
-          <div key={time._id} className="timeRow">
-            <button className={selectedTime === time._id ? 'selected' : ''} onClick={() => handleTimeClick(time._id)}>
-              {time.formattedTime}
-            </button>
-          </div>
-      ))}
+      <div className="dateSelected">
+  <p>{selectedDate ? getMonthInWords(selectedDate) : ''}</p>
+  <div className="timeSchedule">
+    {formattedAiringTime.map((time) => (
+      <div key={time._id} className="timeRow">
+        <button className={selectedTime === time._id ? 'selected' : ''} onClick={() => handleTimeClick(time._id)}>
+          {time.formattedTime}
+        </button>
+      </div>
+    ))}
+  </div>
+</div>
 
-
-          </div>
-        </div>
 
         <div className='senior'>
           <button className="seniorButton" onClick={handleSeniorClick}>
@@ -309,8 +306,6 @@ export const MovieSelected = ({ selectedDate }) => {
         </div>
       )}
 
-
-  {/* not workingyet */}
       {/* Countdown modal */}
       {showCountdownModal && (
         <div className="countdown-modal">
