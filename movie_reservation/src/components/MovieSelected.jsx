@@ -24,6 +24,9 @@ export const MovieSelected = ({ selectedDate }) => {
   const [movieId, setMovieId] = useState(null);
 
   const [showCountdownModal, setShowCountdownModal] = useState(false);
+  let premierCheck
+  
+  
   
   useEffect(() => {
     if (location.state?.movieId) {
@@ -215,6 +218,45 @@ export const MovieSelected = ({ selectedDate }) => {
     return time;
   };
 
+  const [premierDate, setPremierDate] = useState(null);
+
+  const getPremierDate = async (movieId) => {
+    console.log(`Check movie id ${movieId}`);
+    try {
+      const response = await axios.get(`http://localhost:5000/api/movies/${movieId}`);
+      const movie = response.data.movie;
+      console.log(`Check ${movie.premierDate}`);
+      return movie ? movie.premierDate : null; // Corrected property name
+    } catch (error) {
+      console.error(`Error fetching premier date for movie ${movieId}:`, error);
+      return null;
+    }
+  };
+  
+
+  useEffect(() => {
+    console.log("Inside useEffect for fetching premier date");
+    if (movieId) {
+      const fetchPremierDate = async () => {
+        try {
+          const premierDate = await getPremierDate(movieId);
+          setPremierDate(premierDate);
+        } catch (error) {
+          console.error('Error fetching premier date:', error);
+        }
+      };
+  
+      fetchPremierDate();
+      setMovieId(movieId);
+      console.log(`MovieID ${movieId}`);
+    }
+  }, [location.state]);
+
+
+  
+
+  
+
   return (
     <div className="container">
       <div className="seatSelection">
@@ -244,27 +286,40 @@ export const MovieSelected = ({ selectedDate }) => {
 </div>
 
 
-              {/* {console.log(formattedAiringTime)} */}
+              {/* {console.log(`selectedDate: ${selectedDate}`)}
+              {console.log(`FormattedDate: ${formattedAiringTime}`)} */}
       <div className="rightPanel">
-      <div className="dateSelected">
-  <p>{selectedDate ? getMonthInWords(selectedDate) : ''}</p>
-  <div className="timeSchedule">
-    {formattedAiringTime.map((time) => (
-      <div key={time._id} className="timeRow">
-        <button className={selectedTime === time._id ? 'selected' : ''} onClick={() => handleTimeClick(time._id)}>
-          {time.formattedTime}
-        </button>
-      </div>
-    ))}
-  </div>
-</div>
+        <div className="dateSelected">
+          <p>{selectedDate ? getMonthInWords(selectedDate) : ''}</p>
+          <div className="timeSchedule">
+            {formattedAiringTime.map((time) => (
+              <div key={time._id} className="timeRow">
+                <button className={selectedTime === time._id ? 'selected' : ''} onClick={() => handleTimeClick(time._id)}>
+                  {time.formattedTime}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
 
 
-        <div className='senior'>
+        {/* <div className='senior'>
           <button className="seniorButton" onClick={handleSeniorClick}>
             SENIOR
           </button>
-        </div>
+        </div> */}
+
+      {console.log(`selectedDate: ${premierDate}`)}
+      <div className='senior'>
+  {selectedTime !== premierDate /* && premierDate */ && (
+    <button className="seniorButton" onClick={handleSeniorClick}>
+      SENIOR
+    </button>
+  )}
+</div>
+
+      
+
 
         <div className="summary">
           <p>Name Movie: <span className='summaryDetails'>x{selectedSeats.length}</span></p>
