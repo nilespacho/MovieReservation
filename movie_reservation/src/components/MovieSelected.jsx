@@ -6,6 +6,7 @@ import axios from 'axios';
 
 export const MovieSelected = ({ selectedDate }) => {
   const REGPRICE = 350;
+  const PREMIERPRICE = 500
   const [selectedSeats, setSelectedSeats] = useState([]);
   let [selectedTime, setSelectedTime] = useState('');
   let selectedTimeId
@@ -116,25 +117,6 @@ export const MovieSelected = ({ selectedDate }) => {
     // Fetch the premiere date after clicking a time
     try {
       const response = await axios.get(`http://localhost:5000/api/movies/${movieId}`);
-      // if (response.data && response.data.movie) {
-      //   const movie = response.data.movie; // Directly access the movie object
-      //   const premierDateCheck = movie ? movie.premiereDate : null;
-      //   console.log(`premiereDate: ${premierDate}`)
-      //   console.log(`premiereDateCheck: ${premierDateCheck}`)
-      //   console.log(`selectedDate: ${selectedDate}`)
-      //   // Check if the movie is a premier and if selectedDate matches the premierDate of the movie
-      //   if (premierDate && selectedDate === premierDateCheck) {
-      //     // If the movie is a premier and selectedDate matches the premierDate, set premierCheck flag to true
-      //     console.error('Premier set true');
-      //     setPremierCheck(true);
-      //   } else {
-      //     // If not a premier or selectedDate doesn't match, set premierCheck flag to false
-      //     console.error('Premier set false');
-      //     setPremierCheck(false);
-      //   }
-      // } else {
-      //   console.error('Error: No movie data found in the response');
-      // }
       if (response.data && response.data.movie) {
         const movie = response.data.movie; // Directly access the movie object
         const premierDateCheck = movie ? movie.premiereDate : null;
@@ -221,7 +203,33 @@ export const MovieSelected = ({ selectedDate }) => {
 
   
 
+  // const handleSeatClick = (seat) => {
+  //   if (selectedReservation) {
+  //     // If a matching reservation is found
+  //     const reservationSeats = selectedReservation.seats;
+  
+  //     if (reservationSeats.includes(seat)) {
+  //       // If the clicked seat is in the reservation, do nothing
+  //       return;
+  //     }
+  //   }
+  
+  //   const index = selectedSeats.indexOf(seat);
+  //   if (index === -1) {
+  //     setSelectedSeats([...selectedSeats, seat]);
+  //     setTotal(total + REGPRICE);
+  //   } else {
+  //     const updatedSeats = [...selectedSeats];
+  //     updatedSeats.splice(index, 1);
+  //     setSelectedSeats(updatedSeats);
+  //     setTotal(total - REGPRICE);
+  //   }
+  // };
+
   const handleSeatClick = (seat) => {
+    // Determine the price based on whether the movie is premier
+    const pricePerSeat = premierCheck ? PREMIERPRICE : REGPRICE;
+  
     if (selectedReservation) {
       // If a matching reservation is found
       const reservationSeats = selectedReservation.seats;
@@ -235,14 +243,15 @@ export const MovieSelected = ({ selectedDate }) => {
     const index = selectedSeats.indexOf(seat);
     if (index === -1) {
       setSelectedSeats([...selectedSeats, seat]);
-      setTotal(total + REGPRICE);
+      setTotal(total + pricePerSeat);
     } else {
       const updatedSeats = [...selectedSeats];
       updatedSeats.splice(index, 1);
       setSelectedSeats(updatedSeats);
-      setTotal(total - REGPRICE);
+      setTotal(total - pricePerSeat);
     }
   };
+  
 
   const handleSeniorClick = () => {
     setShowSeniorModal(true);
