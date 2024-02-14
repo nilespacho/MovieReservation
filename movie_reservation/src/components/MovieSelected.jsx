@@ -1,10 +1,11 @@
-import React, { useState, useEffect, navigate } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import '../stylesheets/MovieSelected.css';
 import axios from 'axios';
 
 export const MovieSelected = ({ selectedDate }) => {
+  const navigate = useNavigate()
   const REGPRICE = 350;
   const PREMIERPRICE = 500
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -282,33 +283,33 @@ export const MovieSelected = ({ selectedDate }) => {
     };
   
     if (action === 'proceed') {
-    // Add your logic to proceed with the checkout
-    console.log('Proceeding with checkout...');
-    axios.post('http://localhost:5000/api/reservation/addReservation', reservationData)
-      .then(response => {
-        console.log('Reservation added successfully:', response.data);
-        // Add any additional logic you need after successful reservation
-
-        // Show the countdown modal
-        setShowCountdownModal(true);
-
-        // Set a timeout to close the countdown modal and navigate after 2 seconds
-        setTimeout(() => {
-          setShowCountdownModal(false);
+      // Add your logic to proceed with the checkout
+      console.log('Proceeding with checkout...');
+      axios.post('http://localhost:5000/api/reservation/addReservation', reservationData)
+        .then(response => {
+          console.log('Reservation added successfully:', response.data);
+          // Add any additional logic you need after successful reservation
           setShowCheckOutModal(false);
+          // Show the countdown modal
+          setShowCountdownModal(true);
           
-          // Navigate to the home page ('/') after 2 seconds
-          navigate('/');
-        }, 2000);
-      })
-      .catch(error => {
-        console.error('Error adding reservation:', error);
-        // Handle errors here
-      });
-  } else {
-    console.log('Canceled');
-    setShowCheckOutModal(false);
-  }
+  
+          // Set a timeout to close the countdown modal and navigate after 2 seconds
+          setTimeout(() => {
+            setShowCountdownModal(false);
+            
+            // Navigate to the home page ('/') after 2 seconds
+            navigate('/');
+          }, 2000);
+        })
+        .catch(error => {
+          console.error('Error adding reservation:', error);
+          // Handle errors here
+        });
+    } else {
+      console.log('Canceled');
+      setShowCheckOutModal(false);
+    }
   };
 
   const getMonthInWords = (dateString) => {
@@ -434,12 +435,23 @@ export const MovieSelected = ({ selectedDate }) => {
       )}
 
       {/* Countdown modal */}
+
       {showCountdownModal && (
-        <div className="countdown-modal">
-          <p>Reservation successful!</p>
-          <p>Redirecting in 2 seconds...</p>
+        <div className="modal">
+          <div className="modalContent">
+            <p>Reservation successful!</p>
+            <p>Redirecting in 2 seconds...</p>
+          </div>
         </div>
       )}
+
+
+      {/* {showCountdownModal && (
+  <div className="countdown-modal">
+    <p>Reservation successful!</p>
+    <p>Redirecting in 2 seconds...</p>
+  </div>
+)} */}
     </div>
   );
 };
