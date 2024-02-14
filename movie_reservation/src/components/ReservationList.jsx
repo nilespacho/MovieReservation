@@ -61,6 +61,26 @@ export const ReservationList = () => {
         fetchAiringTime();
     }, [reservations]); // Fetch movie names whenever reservations change
 
+    useEffect(() => {
+        const fetchAiringTime = async () => {
+            try {
+                const airingTimeMap = {};
+                await Promise.all(reservations.map(async reservation => {
+                    const response = await axios.get(`http://localhost:5000/api/airing-time/${reservation.airing_time}`);
+                    const startTime = response.data.airingTime.startTime;
+                    const formattedStartTime = formatDateTime(startTime); // Format the start time
+                    airingTimeMap[reservation.airing_time] = formattedStartTime;
+                }));
+                setAiringTime(airingTimeMap);
+            } catch (error) {
+                console.error('Error fetching airing time:', error);
+            }
+        };
+
+        fetchAiringTime();
+    }, [reservations]); // Fetch movie names whenever reservations change
+
+
     const formatDateTime = (dateTimeString) => {
         const date = new Date(dateTimeString);
         const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -76,17 +96,21 @@ export const ReservationList = () => {
         setShowModal(!showModal);
     };
 
-    const deleteReservation = async (reservationId) => {
+    const updateReservation = async (reservationId) => {
         try {
-            // Make DELETE request to your API to delete the reservation
-            await axios.delete(`http://localhost:5000/api/reservation/deleteReservations/${reservationId}`);
-            // Remove the deleted reservation from state
-            setReservations(reservations.filter(reservation => reservation._id !== reservationId));
+            // Make PUT request to update the reservation's is_cancelled status
+            await axios.put(`http://localhost:5000/api/reservation/update/${reservationId}`, {
+                is_cancelled: true // or false, depending on your logic
+            });
+    
+            // Optionally, you can refetch the reservations or update the local state
+    
         } catch (error) {
-            console.error('Error deleting reservation:', error);
+            console.error('Error updating reservation:', error);
         }
-        toggleModal(null); // Close modal after deletion
+        toggleModal(null); // Close modal after updating
     };
+    
 
     return (
         <div className='container'>
@@ -103,7 +127,8 @@ export const ReservationList = () => {
                             Seats: {reservation.seats.join(', ')} <br />
                             {/* Total Price: {reservation.total_price} <br /> */}
                             Is Cancelled: {reservation.is_cancelled ? 'Yes' : 'No'} <br />
-                            <button className='deleteButton' onClick={() => toggleModal(reservation._id)}>Delete</button>
+                            <button className='deleteButton' onClick={() => toggleModal(reservation._id)}>Update</button>
+
                         </li>
                     </div>
                 ))}
@@ -112,9 +137,9 @@ export const ReservationList = () => {
             {showModal && (
                 <div className='modal'>
                     <div className='modalContent'>
-                        <p className='deleteStatement'>Are you sure you want to delete this reservation?</p>
+                    <p className='deleteStatement'>Are you sure you want to update this reservation?</p>
                         <div className='deleteModalButton'>
-                            <button className="yesButton" onClick={() => deleteReservation(selectedReservationId)}>Yes</button>
+                            <button className="yesButton" onClick={() => updateReservation(selectedReservationId)}>Yes</button>
                             <button className="noButton" onClick={() => toggleModal(null)}>No</button>
                         </div>
                     </div>
