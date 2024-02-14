@@ -16,7 +16,6 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
   const [movies, setMovies] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
-
   useEffect(() => {
     axios.get('http://localhost:5000/api/movies')
       .then((response) => setMovies(response.data))
@@ -32,7 +31,7 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
   }, []);
 
   const handleMovieClick = (movieId) => {
-    navigate(`/niles/${movieId}`);
+    navigate(`/niles/${movieId}`, { state: { movieId } });
   };
 
   useEffect(() => {
