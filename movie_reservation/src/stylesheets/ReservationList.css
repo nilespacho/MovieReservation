@@ -1,4 +1,22 @@
-/* ReservationList.css */
+
+.titleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Add align-items center */
+  position: fixed; /* Position the title container */
+  top: 0; /* Place it at the top */
+  width: 100%; /* Make it full width */
+  background-color: #09131E; /* Add background color */
+  height: 80px; /* Set height as needed */
+}
+
+.title {
+  margin-top: 120px;
+  font-size: 30px;
+  color: #EDF5FF;
+  text-align: center;
+}
+ 
 
 .container {
   display: flex;
@@ -10,15 +28,17 @@
 
 .listContainer {
   width: 80%;
-  margin-top: 20px;
+  /* margin-top: 20px; */
+  overflow-y: scroll;
+  max-height: calc(100vh - 220px); /* Set maximum height to avoid overlapping with other elements */
 }
 
 .list {
-  background-color: #37506D;
+  background-color: #EDF5FF;
   border-radius: 15px;
   padding: 10px;
   margin-bottom: 10px;
-  color: white;
+  color: #09131E;
 }
 
 .list li {
@@ -26,7 +46,7 @@
 }
 
 .deleteButton {
-  background-color: #FF5F5F;
+  background-color: #2D8D00;
   color: white;
   border: none;
   border-radius: 5px;
@@ -76,8 +96,9 @@
   height: 60px;
   padding: 10px;
   border: none;
-  border-radius: 20px;
+  border-radius: 22px;
   cursor: pointer;
+  font-size: 22px;
   color: white;
   margin: 0 10px;
 }

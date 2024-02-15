@@ -1,17 +1,34 @@
-
 .Calendar {
-    /* margin-top: 10px; */
     display: flex;
-    flex-wrap: nowrap;
-    flex-grow: 1;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
     height: 100vh;
     background-image: url("mainn.png");
-    background-size:cover;
+    background-size: cover;
     background-attachment: fixed;
     background-position: center;
 }
 
+.reservation-list-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ffffff; /* Header background color */
+    border: 0.15px solid #0f0808;
+    color: #09131E;
+    border-radius: 5px;
+    padding: 20px 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: hide;
+    transition: background-color 0.3s ease;
+    z-index: 1000; /* Ensure the button is above other elements */
+  }
+  
+  .reservation-list-button:hover {
+    background-color: #CA2222;
+  }
+  
 .calendar {
     width: 1000px;
     height: 470px;
@@ -50,7 +67,7 @@
     text-transform: uppercase;
     font-size: 60px;
     font-weight: 1000;
-    color: #ffffff; 
+    color: #ffffff;  
 }
 
 .calendar-body {
@@ -108,13 +125,15 @@
 }
 
 .calendar-day:hover {
-    background-color: #09131E; 
-    color: #ffffff;
+    background-color: rgba(0, 0, 0, .10); /* Light gray hover effect */
 }
 
 .calendar-day p {
     position: absolute;
     color: #333333; /* Dark gray text color */
+}
+.calendar-day p:hover {
+    color: white; /* Change text color to white on hover */
 }
 
 .current {

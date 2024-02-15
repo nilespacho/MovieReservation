@@ -8,6 +8,7 @@ export const MovieSelected = ({ selectedDate }) => {
   const navigate = useNavigate()
   const REGPRICE = 350;
   const PREMIERPRICE = 500
+  const [movie, setMovie] = useState([])
   const [selectedSeats, setSelectedSeats] = useState([]);
   let [selectedTime, setSelectedTime] = useState('');
   let selectedTimeId
@@ -92,18 +93,17 @@ export const MovieSelected = ({ selectedDate }) => {
   
 
   const handleTimeClick = async (time) => {
-    setDateClicked(true);
     setSelectedTime(time);
     selectedTimeId = time;
-    
+    setDateClicked(true);
   
     // Fetch the premiere date after clicking a time
     try {
       const response = await axios.get(`http://localhost:5000/api/movies/${movieId}`);
       if (response.data && response.data.movie) {
-        const movie = response.data.movie; // Directly access the movie object
-        const premierDateCheck = movie ? movie.premiereDate : null;
-        const premierConvertedTime = movie ? new Date(movie.premiereDate).toLocaleDateString('en-US') : null;
+        const movieObject = response.data.movie; // Directly access the movie object
+        const premierDateCheck = movieObject ? movieObject.premiereDate : null;
+        const premierConvertedTime = movieObject ? new Date(movieObject.premiereDate).toLocaleDateString('en-US') : null;
         const selectedDateFormatted = selectedDate.toLocaleDateString('en-US');
         
         console.log(`premiereDate: ${premierDate}`);
@@ -112,7 +112,7 @@ export const MovieSelected = ({ selectedDate }) => {
         
         // Check if the movie is a premier and if selectedDate matches the premierDate of the movie
         if ((premierDate && premierDateCheck) && (selectedDateFormatted && premierConvertedTime)) {
-          if(movie.airing_time === selectedTimeId) {
+          if(movieObject.airing_time === selectedTimeId) {
             // If the movie is a premier and selectedDate matches the premierDate, set premierCheck flag to true
           console.error('Premier set true');
           setPremierCheck(true);
@@ -128,6 +128,7 @@ export const MovieSelected = ({ selectedDate }) => {
       } else {
         console.error('Error: No movie data found in the response');
       }
+      setDateClicked(true);
     } catch (error) {
       console.error('Error fetching premiere date:', error);
       // Handle errors appropriately
@@ -152,8 +153,9 @@ export const MovieSelected = ({ selectedDate }) => {
   const getPremierDate = async (movieId) => {
     try {
       const response = await axios.get(`http://localhost:5000/api/movies/${movieId}`);
-      const movie = response.data.movie
-      return movie ? movie.premiereDate : null;
+      setMovie(response.data.movie)
+      const movieObject = response.data.movie
+      return movieObject ? movieObject.premiereDate : null;
     } catch (error) {
       console.error(`Error fetching premiere date for movie ${movieId}:`, error);
       return null;
@@ -181,14 +183,9 @@ export const MovieSelected = ({ selectedDate }) => {
   
 
   const handleSeatClick = (seat) => {
-    // if (!selectedTime) {
-    //   setDateClicked(true);
-    //   return;
-    // }
-
-    if(dateClicked === false) {
+    if (!selectedTime) {
       setDateClicked(true);
-      return
+      return;
     }
     // Determine the price based on whether the movie is premier
     const pricePerSeat = premierCheck ? PREMIERPRICE : REGPRICE;
@@ -214,10 +211,7 @@ export const MovieSelected = ({ selectedDate }) => {
       setTotal(total - pricePerSeat);
     }
   };
-
-  const handleTimeClick = (time) => {
-    setSelectedTime(time);
-  };
+  
 
   const handleSeniorClick = () => {
     setShowSeniorModal(true);
@@ -252,164 +246,193 @@ export const MovieSelected = ({ selectedDate }) => {
     };
   
     if (action === 'proceed') {
-      // Add your logic to proceed with the checkout
+
+      if (selectedTime && selectedSeats.length > 0) {
+        // Add your logic to proceed with the checkout
       console.log('Proceeding with checkout...');
-      setShowCheckOutModal(false);
+      axios.post('http://localhost:5000/api/reservation/addReservation', reservationData)
+        .then(response => {
+          console.log('Reservation added successfully:', response.data);
+          // Add any additional logic you need after successful reservation
+          setShowCheckOutModal(false);
+          // Show the countdown modal
+          setShowCountdownModal(true);
+          
+  
+          // Set a timeout to close the countdown modal and navigate after 2 seconds
+          setTimeout(() => {
+            setShowCountdownModal(false);
+            
+            // Navigate to the home page ('/') after 2 seconds
+            navigate('/');
+          }, 2000);
+        })
+        .catch(error => {
+          console.error('Error adding reservation:', error);
+          // Handle errors here
+        });
+      }
     } else {
       console.log('Canceled');
       setShowCheckOutModal(false);
     }
+
+    setDateClicked(false);
   };
 
   const getMonthInWords = (dateString) => {
     const date = new Date(dateString);
     const options = { month: 'long', day: 'numeric', year: 'numeric' };
-    return date.toLocaleDateString(undefined, options);
+    time = date.toLocaleDateString(undefined, options);
+    return time;
   };
 
   return (
+          
     <div className="containers">
-      <div className="seatSelection">
-        {[...'HGFEDCBA'].map((row) => (
-          <div key={row} className="row">
-            {[...Array(5).keys()].map((col) => (
-              <div
-                key={`${row}${col + 1}`}
-                className={`seat ${selectedSeats.includes(`${row}${col + 1}`) ? 'selected' : ''}`}
-                onClick={() => handleSeatClick(`${row}${col + 1}`)}
-              >
-                {row}
-                {col + 1}
-              </div>
-            ))}
-          </div>
-        ))}
-        <div className="screen">SCREEN</div>
-      </div>
-
       <div className="leftPanel">
-
-              {/* {console.log(`selectedDate: ${selectedDate}`)}
-              {console.log(`FormattedDate: ${formattedAiringTime}`)} */}
-      <div className="rightPanel">
         <div className="dateSelected">
-          <p className='dateDisplay'>{selectedDate ? getMonthInWords(selectedDate) : ''}</p>
+        <p>{selectedDate ? getMonthInWords(selectedDate) : ''}</p>
           <div className="timeSchedule">
-            {formattedAiringTime.map((time) => (
-              <div key={time._id} className="timeRow">
-                <button className={selectedTime === time._id ? 'selected' : ''} onClick={() => handleTimeClick(time._id)}>
-                  {time.formattedTime}
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className='senior'>
-          <button className="seniorButton" onClick={handleSeniorClick}>
-            SENIOR
-          </button>
-        </div>
-      </div>
-      
-      <div className='rightPanel'>
-
-
-        {/* <div className='senior'>
-          <button className="seniorButton" onClick={handleSeniorClick}>
-            SENIOR
-          </button>
-        </div> */}
-
-      {console.log(`selectedDate: ${premierDate}`)}
-      {!premierCheck && (
-  <div className='senior'>
-    <button className="seniorButton" onClick={handleSeniorClick}>
-      SENIOR
-    </button>
-  </div>
-)}
-
-
-        <div className="summary">
-          <p>Name Movie: <span className='summaryDetails'>x{selectedSeats.length}</span></p>
-          <p>Total: <span className='summaryDetails'>{total}</span></p>
-        </div>
-        <button className="checkoutButton" onClick={handleCheckoutClick}>
-          CHECKOUT
-        </button>
-        <button className="goBackButton">GO BACK</button>
-      </div>
-
-      {showCheckOutModal && (
-        <div className="modal">
-          <div className="modalContent">
-            <p>Please select both time and seats before checking out.</p>
-            <div className="checkoutModalButtons">
-              <button className="okButton" onClick={() => setShowCheckOutModal(false)}>OK</button>
+              {formattedAiringTime.map((time) => (
+                <div key={time._id} className="timeRow">
+                  <button className={selectedTime === time._id ? 'selected' : ''} onClick={() => handleTimeClick(time._id)}>
+                    {time.formattedTime}
+                  </button>
+                </div>
+              ))}
             </div>
-          </div>
         </div>
-      )}
-
-      {showCheckOutModal && (
-        <div className="modal">
-          <div className="modalContent">
-            <p>Proceed?</p>
-            <div className="checkoutModalButtons">
-              <button className="yesButton" onClick={() => handleModalAction('proceed')}>YES</button>
-              <button className="noButton" onClick={() => handleModalAction('cancel')}>NO</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showSeniorModal && (
-        <div className="modal">
-          <div className="modalContent">
-            <p className='seniorNumber'>Number of seniors:</p>
-            <input
-              className='seniorInput'
-              type="number"
-              value={seniorCount}
-              onChange={(e) => setSeniorCount(parseInt(e.target.value))}
-              min="0"
-            />
-            <div className="seniorModalButton">
-              <button className="submitButton" onClick={handleSeniorCountSubmit}>Submit</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Countdown modal */}
-
-      {showCountdownModal && (
-        <div className="modal">
-          <div className="modalContent">
-            <p>Reservation successful!</p>
-            <p>Redirecting in 2 seconds...</p>
-          </div>
-        </div>
-      )}
-
-      {/* Time Not Selected Modal */}
-      {dateClicked && (
-        <div className="modal">
-          <div className="modalContent">
-            <p>Please select a time schedule first!</p>
-            <div className="checkoutModalButtons">
-            <button className="noButton" onClick={() => setDateClicked(false)}>
-              CLOSE
-            </button>
-            </div>
-          </div>
-        </div>
-      )}
+        {!premierCheck && (
+    <div className='senior'>
+      <button className="seniorButton" onClick={handleSeniorClick}>
+        SENIOR
+      </button>
     </div>
+  )}
+      </div>  
+
+      <div className="seatSelection">
+  {[...'HGFEDCBA'].map((row) => (
+    <div key={row} className="row">
+      {[...Array(5).keys()].map((col) => {
+        const seatId = `${row}${col + 1}`;
+        const isReserved = selectedTime && reservedTime.some((reservation) =>
+          reservation.airing_time === selectedTime &&
+          reservation.mov_ID === movieId &&
+          reservation.seats.includes(seatId) &&
+          !reservation.is_cancelled  // Check if reservation is not cancelled
+        );
+
+        return (
+          <div
+            key={`${row}${col + 1}`}
+            className={`seat ${selectedSeats.includes(seatId) ? 'selected' : ''} ${isReserved ? 'reserved' : ''}`}
+            onClick={() => !isReserved && handleSeatClick(seatId)} // Disable click if reserved
+          >
+            {row}
+            {col + 1}
+          </div>
+        );
+      })}
+    </div>
+  ))}
+  <div className="screen">SCREEN</div>
+</div>
+
+
+      <div className='rightPanelContainer'>
+        <div className="textContainer">
+        <h1>{movie.title}</h1>
+        </div>
+
+        <div className='rightPanel'>
+          <div className="summary">
+            <p>Ticket: <span className='summaryDetails'>x{selectedSeats.length}</span></p>
+            <p>Total: <span className='summaryDetails'>{total}</span></p>
+
+
+            
+          </div>
+        </div>
+        <div className='buttonPanel'>
+        <button className="checkoutButton" onClick={handleCheckoutClick}>
+            CHECKOUT
+          </button>
+          <button className="goBackButton" onClick={() => navigate('/')}>GO BACK</button>
+        </div>
+
+      </div>
+
+
+      {showCheckOutModal && (
+          <div className="modal">
+            <div className="modalContent">
+              <p>Please select both time and seats before checking out.</p>
+              <div className="checkoutModalButtons">
+                <button className="okButton" onClick={() => setShowCheckOutModal(false)}>OK</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {showCheckOutModal && (
+          <div className="modal">
+            <div className="modalContent">
+              <p>Proceed?</p>
+              <div className="checkoutModalButtons">
+                <button className="yesButton" onClick={() => handleModalAction('proceed')}>YES</button>
+                <button className="noButton" onClick={() => handleModalAction('cancel')}>NO</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {showSeniorModal && (
+          <div className="modal">
+            <div className="modalContent">
+              <p className='seniorNumber'>Number of seniors:</p>
+              <input
+                className='seniorInput'
+                type="number"
+                value={seniorCount}
+                onChange={(e) => setSeniorCount(parseInt(e.target.value))}
+                min="0"
+              />
+              <div className="seniorModalButton">
+                <button className="submitButton" onClick={handleSeniorCountSubmit}>Submit</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Countdown modal */}
+
+        {showCountdownModal && (
+          <div className="modal">
+            <div className="modalContent">
+              <p>Reservation successful!</p>
+              <p>Redirecting in 2 seconds...</p>
+            </div>
+          </div>
+        )}
+
+        {/* Time Not Selected Modal */}
+        {dateClicked && (
+          <div className="modal">
+            <div className="modalContent">
+              <p>Please select a time schedule first!</p>
+              <div className="checkoutModalButtons">
+              <button className="noButton" onClick={() => setDateClicked(false)}>
+                CLOSE
+              </button>
+              </div>
+            </div>
+          </div>
+        )}
+    </div>
+
   );
-};
+  };
 
 export default MovieSelected;
-
-
-

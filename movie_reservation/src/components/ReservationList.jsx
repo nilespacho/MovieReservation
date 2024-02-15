@@ -61,26 +61,6 @@ export const ReservationList = () => {
         fetchAiringTime();
     }, [reservations]); // Fetch movie names whenever reservations change
 
-    useEffect(() => {
-        const fetchAiringTime = async () => {
-            try {
-                const airingTimeMap = {};
-                await Promise.all(reservations.map(async reservation => {
-                    const response = await axios.get(`http://localhost:5000/api/airing-time/${reservation.airing_time}`);
-                    const startTime = response.data.airingTime.startTime;
-                    const formattedStartTime = formatDateTime(startTime); // Format the start time
-                    airingTimeMap[reservation.airing_time] = formattedStartTime;
-                }));
-                setAiringTime(airingTimeMap);
-            } catch (error) {
-                console.error('Error fetching airing time:', error);
-            }
-        };
-
-        fetchAiringTime();
-    }, [reservations]); // Fetch movie names whenever reservations change
-
-
     const formatDateTime = (dateTimeString) => {
         const date = new Date(dateTimeString);
         const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -103,14 +83,18 @@ export const ReservationList = () => {
                 is_cancelled: true // or false, depending on your logic
             });
     
-            // Optionally, you can refetch the reservations or update the local state
+            // Update the local state to mark the reservation as cancelled
+            setReservations(prevReservations =>
+                prevReservations.map(reservation =>
+                    reservation._id === reservationId ? { ...reservation, is_cancelled: true } : reservation
+                )
+            );
     
         } catch (error) {
             console.error('Error updating reservation:', error);
         }
         toggleModal(null); // Close modal after updating
     };
-    
 
     return (
         <div className='container'>
@@ -120,16 +104,16 @@ export const ReservationList = () => {
             <ul className='listContainer'>
                 {reservations.map(reservation => (
                     <div key={reservation._id}>
-                        <li className='list'>
-                            ID: {reservation._id} <br />
-                            Movie Name: {movieNames[reservation.mov_ID]} <br />
-                            Airing Time: {airingTime[reservation.airing_time]} <br />
-                            Seats: {reservation.seats.join(', ')} <br />
-                            {/* Total Price: {reservation.total_price} <br /> */}
-                            Is Cancelled: {reservation.is_cancelled ? 'Yes' : 'No'} <br />
-                            <button className='deleteButton' onClick={() => toggleModal(reservation._id)}>Update</button>
-
-                        </li>
+                        {/* Check if reservation is not deleted */}
+                        {reservation.is_cancelled ? null : (
+                            <li className='list'>
+                                ID: {reservation._id} <br />
+                                Movie Name: {movieNames[reservation.mov_ID]} <br />
+                                Airing Time: {airingTime[reservation.airing_time]} <br />
+                                Seats: {reservation.seats.join(', ')} <br />
+                                <button className='deleteButton' onClick={() => toggleModal(reservation._id)}>Update</button>
+                            </li>
+                        )}
                     </div>
                 ))}
             </ul>
@@ -137,7 +121,7 @@ export const ReservationList = () => {
             {showModal && (
                 <div className='modal'>
                     <div className='modalContent'>
-                    <p className='deleteStatement'>Are you sure you want to update this reservation?</p>
+                        <p className='deleteStatement'>Are you sure you want to update this reservation?</p>
                         <div className='deleteModalButton'>
                             <button className="yesButton" onClick={() => updateReservation(selectedReservationId)}>Yes</button>
                             <button className="noButton" onClick={() => toggleModal(null)}>No</button>

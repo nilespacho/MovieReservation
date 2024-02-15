@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import CalendarDays from '../pages/Calendar-days/index';
-import '../stylesheets/Calendar.css'
+import '../stylesheets/Calendar.css';
 
 export default class Calendar extends Component {
   constructor() {
     super();
 
-    this.weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    this.weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     this.months = ['January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -34,6 +35,10 @@ export default class Calendar extends Component {
                 })
               }
             </div>
+             {/* Button to navigate to reservation list screen */}
+             <Link to="/Reservation">
+              <button className="reservation-list-button">Reservation List</button>
+            </Link>   
             <CalendarDays day={this.state.currentDay} changeCurrentDay={this.changeCurrentDay} />
           </div>
         </div>

@@ -1,8 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+.reserved {
+  background-color: grey; /* or any other style to darken the seat */
+  color: white; /* text color for better visibility */
+}
+
 body {
   overflow: hidden;
 }
-/* General styles */
+
 .movieSelect {
   background-image: url("MovieSelect.png");
   background-size: cover;
@@ -13,10 +19,10 @@ body {
 /* Date and time styles */
 .date {
   position: absolute;
-  top: 100px;
+  top: 95px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 30px;
+  font-size: 34px; /* Responsive font size */
   color: #FFFFFF;
 }
 
@@ -27,11 +33,11 @@ body {
 }
 
 .current-time {
-  font-size: 3vw; 
+  font-size: 2.5vw; /* Responsive font size */
   color: #FFFFFF;
   position: absolute;
   top: 5px;
-  right: 50px;
+  right: 40px;
 }
 
 /* Movie grid styles */
@@ -39,8 +45,8 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 7%; 
-  padding: 10vw; 
+  gap: 4%; /* Adjust the gap between movie items */
+  padding: 10vw; /* Responsive padding */
 }
 
 .movie-item {
@@ -56,11 +62,13 @@ body {
   width: 80%; /* Make the image fill its container */
   height: auto; /* Automatically adjust height to maintain aspect ratio */
   border-radius: 1vw; /* Responsive border radius */
+  margin-bottom: 2vw; /* Responsive margin bottom */
   transition: transform 0.3s ease;
 }
 
-.movie-item:hover img {
-  transform: translateY(-10px); 
+/* Add hover effect */
+.movie-item img:hover {
+  transform: translateY(-5px); 
 }
 
 /* Media queries for responsiveness */
@@ -87,6 +95,7 @@ body {
 }
 
 .movie-info h2 {
+  margin-top: 0.5vw; /* Responsive margin top */
   text-align: center;
   font-size: 1.2vw; /* Responsive font size */
   color: #ECF0F1; /* Light gray text for movie titles */

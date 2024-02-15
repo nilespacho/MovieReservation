@@ -1,84 +1,44 @@
+body{
+  background-color: #09131E;
+}
+
 .reserved {
   background-color: grey; /* or any other style to darken the seat */
   color: white; /* text color for better visibility */
 }
 
-
-.container {
+.mainContainer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center; 
-  min-height: 100vh; 
-  background-color: #09131E;
-}
-
-.seatSelection {
-  margin-right: 10px;
-  background-color: #37506D;
-  border-radius: 15px;
-  padding: 5px;
-  display: flex;
-  flex-direction: column; /* Stack rows vertically */
-  align-items: center; /* Center items horizontally */
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.row {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-.seat {
-  width: 80px;
-  height: 50px;
-  background-color: #EDF5FF;
-  border-radius: 10px;
-  font-weight: bold;
-  margin: 0 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.seat.selected {
-  background-color: black;
-  color: white;
-}
-
-.screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   text-align: center;
-  margin-top: 10px;
-  width: 100%; /* Change to percentage width for responsiveness */
-  height: 41px;
-  font-size: 36px;
-  background-color: #CA2222;
+}
+
+.containers {
+  display: flex;
+  width: 100vw;
+  justify-content: center; 
+  margin-top: 1.2em;
+  gap: 20px;
+  align-items: center; /* Center children vertically */
+
 }
 
 .leftPanel {
-  width: 35%; /* Adjust the width to your preference */
-  height: 450px;
-  color: white;
-  position: fixed;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.rightPanel {
+  width: 300px;
   padding: 10px;
+  border-radius: 10px;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  color: white;
 }
 
 .dateSelected {
   margin-bottom: 10px;
-  font-size: 48px;
+  font-size: 36px;
   font-weight: bold;
   text-align: center;
 }
@@ -104,8 +64,8 @@
   border-color: #EDF5FF;
   border-radius: 10px;
   margin: 0 10px;
-  width: 110px;
-  height: 95px;
+  width: 105px;
+  height: 55px;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
@@ -123,54 +83,161 @@
 }
 
 .seniorButton {
-  width: 230px;
-  height: 57px;
-  padding: 10px;
+  width: 190px;
+  height: 60px;
+  /* padding: 10px; */
   border-radius: 10px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
+  background-color: #BE19C1;
+  border: 1px solid #2C3E50;
+  font-weight: bold;
   font-size: 28px;
-  margin-bottom: 20px;
+  color: white;
+  margin-bottom: 10px;
   cursor: pointer;
 }
 
 .seniorButton:hover {
-  background-color: #2782e4;
+  background-color: #EDF5FF;
+  color: #BE19C1;
+}
+
+.seatSelection {
+  width: 550px;
+  background-color: #37506D;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.seat {
+  width: 80px;
+  height: 50px;
+  background-color: #EDF5FF;
+  border-radius: 10px;
+  font-weight: bold;
+  margin: 0 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.seat.selected {
+  background-color: #339E00;
+  color: white;
+  
+}
+
+.screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 10px;
+  width: 500px;
+  height: 41px;
+  font-size: 36px;
+  background-color: #CA2222;
+  color: #EDF5FF;
+}
+
+.rightPanelContainer {
+  display: flex;
+  left: 10;
+  flex-direction: column;
+  width: auto;
+}
+
+.rightPanelContainer .textContainer {
+  text-wrap: wrap;
+  width: 100px;
+}
+
+.rightPanelContainer .textContainer h1 {
+  color: #EDF5FF;
+}
+
+.rightPanel {
+  width: 200px;
+  padding: 10px;
+  background-color: #EDF5FF;
+  color: #09131E; 
+  border-radius: 10px;
 }
 
 .summary {
-  border-top: 1px solid #ccc;
-  padding-top: 20px;
-  margin-top: 20px;
-  font-size: 28px;
+  /* margin-top: 20px; */
+  font-size: 22px;
   text-align: left;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.summary p {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .summaryDetails {
-  float: right;
+  margin-left: auto;
 }
 
-.checkoutButton,
-.goBackButton {
+.buttonPanel {
+  width: 200px;
+  padding: 20px;
+  margin-top: 20px;
+  gap: 15px;
   display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 10px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
+  justify-content: space-between;
   align-items: center;
-  font-size: 28px;
-  width: 450px;
-  height: 50px;
+}
+
+.goBackButton {
+  width: 80px;
+  height: 45px;
+  font-size: 16px;
+  background-color: transparent;
+  color: white;
+  border: 1px solid #ccc;
+
+  border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px;
 }
 
-.checkoutButton:hover,
+.checkoutButton {
+  width: 150px;
+  height: 45px;
+  font-size: 18px;
+  background-color: #2D8D00;
+  color: #EDF5FF;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .goBackButton:hover {
-  background-color: #2782e4;
+  background-color: #EDF5FF;
+  color: #09131E;
 }
 
+.checkoutButton:hover {
+  background-color: #EDF5FF;
+  color: #2D8D00;
+}
+
+/* MODALS */
 .modal {
   position: fixed;
   top: 0;
@@ -217,13 +284,13 @@
 
 .checkoutModalButtons .yesButton {
   background-color: #5D9C59;
-  font-size: 22px;
+  font-size: 18px;
   margin-right: 20px;
 }
 
 .checkoutModalButtons .noButton {
   background-color: #DF2E38;
-  font-size: 22px;
+  font-size: 18px;
   margin-left: 20px;
 }
 
@@ -267,72 +334,4 @@
 
 .seniorModalButton button:focus {
   outline: none;
-}
-
-/* Responsive adjustments */
-@media only screen and (max-width: 768px) {
-  .seatSelection {
-    margin-right: 10px;
-  }
-
-  .seat {
-    width: 30px;
-    height: 30px;
-    font-size: 12px;
-  }
-
-  .screen {
-    font-size: 24px;
-  }
-
-  .dateSelected {
-    margin-bottom: 20px;
-    font-size: 36px;
-    text-align: center;
-    color: red;
-  }
-
-  .timeRow button {
-    width: 120px;
-    height: 40px;
-    font-size: 16px;
-  }
-
-  .seniorButton {
-    width: 150px;
-    height: 40px;
-    font-size: 18px;
-  }
-
-  .summary {
-    font-size: 20px;
-  }
-
-  .checkoutButton,
-  .goBackButton {
-    width: 250px;
-    height: 40px;
-    font-size: 24px;
-  }
-
-  .modalContent {
-    width: 90%; 
-    height: auto; 
-    font-size: 24px; 
-  }
-
-  .checkoutModalButtons button {
-    width: 110px; 
-    height: 60px; 
-    font-size: 20px; 
-    margin: 0 5px; 
-  }
-
-  .checkoutModalButtons .yesButton {
-    margin-right: 10px; 
-  }
-
-  .checkoutModalButtons .noButton {
-    margin-left: 10px; 
-  }
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../stylesheets/MovieSelect.css'; // Import the CSS file
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom'; // Import useLocation and useNavigate hooks
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const cinemasData = [
   { id: 1, name: 'Cinema 1' },
@@ -15,6 +15,7 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
   const [movies, setMovies] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
+  
   useEffect(() => {
     axios.get('http://localhost:5000/api/movies')
       .then((response) => setMovies(response.data))
@@ -31,23 +32,16 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
 
   const handleMovieClick = (movieId, premiereDate, isPremier) => {
     const currentDate = new Date(selectedDate);
-    currentDate.setHours(0, 0, 0, 0); // Set time to midnight
-  
-    // Convert premiereDate to 'Asia/Manila' timezone and set time to midnight
+    currentDate.setHours(0, 0, 0, 0);
+
     const premiereDateTime = new Date(premiereDate);
     premiereDateTime.setHours(0, 0, 0, 0);
-  
-    console.log(`the selected date: ${currentDate}`);
-    console.log(`the premiere date: ${premiereDateTime}`);
-  
-    // Check if the movie is a premiere and if the selectedDate is on or after the premiereDate
+
     if (!isPremier || (isPremier && currentDate >= premiereDateTime)) {
       navigate(`/niles/${movieId}`, { state: { movieId } });
     }
-    // Optionally, you can show a message or take other actions if the conditions are not met
   };
   
-
   useEffect(() => {
     if (location.state?.selectedDay) {
       onSelectedDate(location.state.selectedDay.date);
@@ -55,11 +49,10 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
   }, [location.state, onSelectedDate]);
 
   return (
-    <div>
+    <div className="movieSelect"> {/* Apply the movieSelect class */}
       <div className="date-time">
         <h2 className="current-time">{currentTime.toLocaleTimeString()}</h2>
       </div>
-      <div className="movieSelect">
       <div className="movie-grid">
       {movies.movies &&
   movies.movies.map((movie, index) => (
@@ -76,6 +69,7 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
       </div>
     </div>
   ))}
+
 
       </div>
       <div className="date">
