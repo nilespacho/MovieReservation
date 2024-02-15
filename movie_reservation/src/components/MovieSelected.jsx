@@ -8,6 +8,7 @@ export const MovieSelected = ({ selectedDate }) => {
   const navigate = useNavigate()
   const REGPRICE = 350;
   const PREMIERPRICE = 500
+  const [movie, setMovie] = useState([])
   const [selectedSeats, setSelectedSeats] = useState([]);
   let [selectedTime, setSelectedTime] = useState('');
   let selectedTimeId
@@ -100,9 +101,9 @@ export const MovieSelected = ({ selectedDate }) => {
     try {
       const response = await axios.get(`http://localhost:5000/api/movies/${movieId}`);
       if (response.data && response.data.movie) {
-        const movie = response.data.movie; // Directly access the movie object
-        const premierDateCheck = movie ? movie.premiereDate : null;
-        const premierConvertedTime = movie ? new Date(movie.premiereDate).toLocaleDateString('en-US') : null;
+        const movieObject = response.data.movie; // Directly access the movie object
+        const premierDateCheck = movieObject ? movieObject.premiereDate : null;
+        const premierConvertedTime = movieObject ? new Date(movieObject.premiereDate).toLocaleDateString('en-US') : null;
         const selectedDateFormatted = selectedDate.toLocaleDateString('en-US');
         
         console.log(`premiereDate: ${premierDate}`);
@@ -111,7 +112,7 @@ export const MovieSelected = ({ selectedDate }) => {
         
         // Check if the movie is a premier and if selectedDate matches the premierDate of the movie
         if ((premierDate && premierDateCheck) && (selectedDateFormatted && premierConvertedTime)) {
-          if(movie.airing_time === selectedTimeId) {
+          if(movieObject.airing_time === selectedTimeId) {
             // If the movie is a premier and selectedDate matches the premierDate, set premierCheck flag to true
           console.error('Premier set true');
           setPremierCheck(true);
@@ -152,8 +153,9 @@ export const MovieSelected = ({ selectedDate }) => {
   const getPremierDate = async (movieId) => {
     try {
       const response = await axios.get(`http://localhost:5000/api/movies/${movieId}`);
-      const movie = response.data.movie
-      return movie ? movie.premiereDate : null;
+      setMovie(response.data.movie)
+      const movieObject = response.data.movie
+      return movieObject ? movieObject.premiereDate : null;
     } catch (error) {
       console.error(`Error fetching premiere date for movie ${movieId}:`, error);
       return null;
@@ -292,7 +294,8 @@ export const MovieSelected = ({ selectedDate }) => {
   
 
   return (
-    <div className="container">
+    <div className="containers">
+      <h1>{movie.title}</h1>
       <div className="seatSelection">
   {[...'HGFEDCBA'].map((row) => (
     <div key={row} className="row">
