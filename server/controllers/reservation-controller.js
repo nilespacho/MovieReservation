@@ -91,12 +91,44 @@ const getReservationById = async (req, res) => {
     }
 };
 
-// Export the named functions
+const updateReservationCancelledStatus = async (req, res) => {
+    try {
+        const reservationId = req.params.id;
+        const { is_cancelled } = req.body;
+
+        // Check if the reservationId is a valid ObjectId
+        if (!mongoose.isValidObjectId(reservationId)) {
+            return res.status(400).json({ status: 'error', error: 'Invalid reservation ID' });
+        }
+
+        // Validate is_cancelled field
+        if (typeof is_cancelled !== 'boolean') {
+            return res.status(400).json({ status: 'error', error: 'Invalid is_cancelled value' });
+        }
+
+        // Find and update the reservation
+        const updatedReservation = await Reservation.findByIdAndUpdate(
+            reservationId,
+            { is_cancelled },
+            { new: true }
+        );
+
+        if (!updatedReservation) {
+            return res.status(404).json({ status: 'error', error: 'Reservation not found' });
+        }
+
+        res.json({ status: 'ok', updatedReservation });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: 'error', error: err.message });
+    }
+};
+
+// Export the named functions, including the new one
 module.exports = {
     addReservation,
     getReservations,
     deleteReservation,
     getReservationById,
-}
-
-
+    updateReservationCancelledStatus,
+};

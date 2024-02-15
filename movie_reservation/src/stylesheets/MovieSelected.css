@@ -1,4 +1,10 @@
-.containers {
+.reserved {
+  background-color: grey; /* or any other style to darken the seat */
+  color: white; /* text color for better visibility */
+}
+
+
+.container {
   display: flex;
   justify-content: center;
   align-items: center; 
