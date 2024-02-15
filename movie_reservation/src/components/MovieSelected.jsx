@@ -28,8 +28,8 @@ export const MovieSelected = ({ selectedDate }) => {
   const [showCountdownModal, setShowCountdownModal] = useState(false);
   const [premierCheck, setPremierCheck] = useState(false);
   const [premierDate, setPremierDate] = useState(null);
-
-  
+  const [dateClicked, setDateClicked] = useState(false);
+  const [seatClicked, setSeatClicked] = useState(false)
   
   
   useEffect(() => {
@@ -91,26 +91,6 @@ export const MovieSelected = ({ selectedDate }) => {
   }, []);
   
 
-
-  
-  // const handleTimeClick = (time) => {
-  //   setSelectedTime(time);
-  //   selectedTimeId = time;
-  
-  //   // Check if the clicked time exists in the reservations for the same movie
-  //   const isReserved = reservedTime.some(reservation => 
-  //     reservation.airing_time === selectedTimeId && reservation.mov_ID === movieId
-  //   );
-  
-  //   console.log('All Reservations:', reservedTime);
-  
-  //   if (isReserved) {
-  //     console.log(`Reserved Time: ${reservedTime}`);
-  //   } else {
-  //     console.log('This time is not reserved for the selected movie');
-  //   }
-  // };
-
   const handleTimeClick = async (time) => {
     setSelectedTime(time);
     selectedTimeId = time;
@@ -146,7 +126,7 @@ export const MovieSelected = ({ selectedDate }) => {
       } else {
         console.error('Error: No movie data found in the response');
       }
-      
+      setDateClicked(true);
     } catch (error) {
       console.error('Error fetching premiere date:', error);
       // Handle errors appropriately
@@ -195,39 +175,17 @@ export const MovieSelected = ({ selectedDate }) => {
       fetchPremierDate();
     }
   }, [movieId]);
-  
-  
-  
-  
-
-
 
   
-
-  // const handleSeatClick = (seat) => {
-  //   if (selectedReservation) {
-  //     // If a matching reservation is found
-  //     const reservationSeats = selectedReservation.seats;
   
-  //     if (reservationSeats.includes(seat)) {
-  //       // If the clicked seat is in the reservation, do nothing
-  //       return;
-  //     }
-  //   }
-  
-  //   const index = selectedSeats.indexOf(seat);
-  //   if (index === -1) {
-  //     setSelectedSeats([...selectedSeats, seat]);
-  //     setTotal(total + REGPRICE);
-  //   } else {
-  //     const updatedSeats = [...selectedSeats];
-  //     updatedSeats.splice(index, 1);
-  //     setSelectedSeats(updatedSeats);
-  //     setTotal(total - REGPRICE);
-  //   }
-  // };
 
   const handleSeatClick = (seat) => {
+    if (!selectedTime) {
+      setDateClicked(true);
+      return;
+    }
+
+    setSeatClicked(true)
     // Determine the price based on whether the movie is premier
     const pricePerSeat = premierCheck ? PREMIERPRICE : REGPRICE;
   
@@ -269,7 +227,11 @@ export const MovieSelected = ({ selectedDate }) => {
   };
 
   const handleCheckoutClick = () => {
-    setShowCheckOutModal(true);
+    if (!selectedTime && selectedSeats.length === 0) {
+      setShowCheckOutModal(true);
+    } else {
+      setShowCheckOutModal(true);
+    }
   };
 
   const handleModalAction = (action) => {
@@ -283,7 +245,9 @@ export const MovieSelected = ({ selectedDate }) => {
     };
   
     if (action === 'proceed') {
-      // Add your logic to proceed with the checkout
+
+      if (selectedTime && selectedSeats.length > 0) {
+        // Add your logic to proceed with the checkout
       console.log('Proceeding with checkout...');
       axios.post('http://localhost:5000/api/reservation/addReservation', reservationData)
         .then(response => {
@@ -306,10 +270,13 @@ export const MovieSelected = ({ selectedDate }) => {
           console.error('Error adding reservation:', error);
           // Handle errors here
         });
+      }
     } else {
       console.log('Canceled');
       setShowCheckOutModal(false);
     }
+
+    setDateClicked(false);
   };
 
   const getMonthInWords = (dateString) => {
@@ -319,10 +286,6 @@ export const MovieSelected = ({ selectedDate }) => {
     return time;
   };
 
-
-
-  
-  
 
 
   
@@ -391,9 +354,6 @@ export const MovieSelected = ({ selectedDate }) => {
 )}
 
 
-      
-
-
         <div className="summary">
           <p>Name Movie: <span className='summaryDetails'>x{selectedSeats.length}</span></p>
           <p>Total: <span className='summaryDetails'>{total}</span></p>
@@ -403,6 +363,16 @@ export const MovieSelected = ({ selectedDate }) => {
         </button>
         <button className="goBackButton">GO BACK</button>
       </div>
+
+        <div className="modal">
+          <div className="modalContent">
+            <p>Please select both time and seats before checking out.</p>
+            <div className="checkoutModalButtons">
+              <button className="okButton" onClick={() => setShowCheckOutModal(false)}>OK</button>
+            </div>
+          </div>
+        </div>
+
 
       {showCheckOutModal && (
         <div className="modal">
@@ -445,13 +415,19 @@ export const MovieSelected = ({ selectedDate }) => {
         </div>
       )}
 
-
-      {/* {showCountdownModal && (
-  <div className="countdown-modal">
-    <p>Reservation successful!</p>
-    <p>Redirecting in 2 seconds...</p>
-  </div>
-)} */}
+      {/* Time Not Selected Modal */}
+      {dateClicked && (
+        <div className="modal">
+          <div className="modalContent">
+            <p>Please select a time schedule first!</p>
+            <div className="checkoutModalButtons">
+            <button className="noButton" onClick={() => setDateClicked(false)}>
+              CLOSE
+            </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
