@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import '../stylesheets/MovieSelect.css';
+import '../stylesheets/MovieSelect.css'; // Import the CSS file
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom'; // Import useLocation and useNavigate hooks
-
 
 const cinemasData = [
   { id: 1, name: 'Cinema 1' },
@@ -46,16 +45,18 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
       <div className="date-time">
         <h2 className="current-time">{currentTime.toLocaleTimeString()}</h2>
       </div>
-      <div className="movie-grid">  
-        {movies.movies && movies.movies.map((movie, index) => (
-          <div key={movie.id} className="movie-item">
-            <div className="cinema-data">{cinemasData[index].name}</div>
-            <img src={movie.poster} alt={movie.title} onClick={() => handleMovieClick(movie._id)} />
-            <div className="movie-info">
-              <h2>{movie.title}</h2>
+      <div className="movieSelect">
+        <div className="movie-grid">  
+          {movies.movies && movies.movies.map((movie, index) => (
+            <div key={movie.id} className="movie-item">
+              <div className="cinema-data">{cinemasData[index].name}</div>
+              <img src={movie.poster} alt={movie.title} onClick={() => handleMovieClick(movie._id)} />
+              <div className="movie-info">
+                <h2>{movie.title}</h2>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
       <div className="date">
         <h1>{selectedDate ? getMonthInWords(selectedDate) : ''}</h1> 

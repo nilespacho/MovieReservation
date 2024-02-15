@@ -108,7 +108,8 @@
 }
 
 .calendar-day:hover {
-    background-color: rgba(0, 0, 0, .10); /* Light gray hover effect */
+    background-color: #09131E; 
+    color: #ffffff;
 }
 
 .calendar-day p {

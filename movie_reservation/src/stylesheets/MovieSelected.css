@@ -1,15 +1,23 @@
-.container {
+.containers {
   display: flex;
   justify-content: center;
   align-items: center; 
   min-height: 100vh; 
+  background-color: #09131E;
 }
 
 .seatSelection {
   margin-right: 10px;
-  background-color: #D9D9D9;
+  background-color: #37506D;
+  border-radius: 15px;
   padding: 5px;
-  /* overflow-y: auto;  */
+  display: flex;
+  flex-direction: column; /* Stack rows vertically */
+  align-items: center; /* Center items horizontally */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .row {
@@ -20,8 +28,10 @@
 
 .seat {
   width: 80px;
-  height: 60px;
-  border: 1px solid black;
+  height: 50px;
+  background-color: #EDF5FF;
+  border-radius: 10px;
+  font-weight: bold;
   margin: 0 5px;
   display: flex;
   justify-content: center;
@@ -43,18 +53,32 @@
   width: 100%; /* Change to percentage width for responsiveness */
   height: 41px;
   font-size: 36px;
-  background-color: #61A3BA;
+  background-color: #CA2222;
+}
+
+.leftPanel {
+  width: 35%; /* Adjust the width to your preference */
+  height: 450px;
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .rightPanel {
   padding: 10px;
-  border: 1px solid #ccc;
 }
 
 .dateSelected {
-  margin-bottom: 20px;
-  font-size: 36px;
+  margin-bottom: 10px;
+  font-size: 48px;
+  font-weight: bold;
   text-align: center;
+}
+
+.dateDisplay{
+  margin-bottom: 15px;
 }
 
 .timeSchedule {
@@ -70,10 +94,14 @@
 }
 
 .timeRow button {
-  margin: 0 5px;
-  width: 180px;
-  height: 60px;
-  font-size: 24px;
+  background-color: #EDF5FF;
+  border-color: #EDF5FF;
+  border-radius: 10px;
+  margin: 0 10px;
+  width: 110px;
+  height: 95px;
+  font-size: 20px;
+  font-weight: bold;
   cursor: pointer;
 }
 
@@ -89,9 +117,10 @@
 }
 
 .seniorButton {
-  width: 370px;
+  width: 230px;
   height: 57px;
   padding: 10px;
+  border-radius: 10px;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   font-size: 28px;
@@ -234,10 +263,6 @@
   outline: none;
 }
 
-.seniorModalButton button:focus {
-  outline: none;
-}
-
 /* Responsive adjustments */
 @media only screen and (max-width: 768px) {
   .seatSelection {
@@ -255,7 +280,10 @@
   }
 
   .dateSelected {
-    font-size: 24px;
+    margin-bottom: 20px;
+    font-size: 36px;
+    text-align: center;
+    color: red;
   }
 
   .timeRow button {
@@ -265,7 +293,7 @@
   }
 
   .seniorButton {
-    width: 250px;
+    width: 150px;
     height: 40px;
     font-size: 18px;
   }

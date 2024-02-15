@@ -65,7 +65,7 @@ export const MovieSelected = ({ selectedDate }) => {
   };
 
   return (
-    <div className="container">
+    <div className="containers">
       <div className="seatSelection">
         {[...'HGFEDCBA'].map((row) => (
           <div key={row} className="row">
@@ -84,9 +84,9 @@ export const MovieSelected = ({ selectedDate }) => {
         <div className="screen">SCREEN</div>
       </div>
 
-      <div className="rightPanel">
+      <div className="leftPanel">
         <div className="dateSelected">
-          <p>{selectedDate ? getMonthInWords(selectedDate) : ''}</p>
+          <p className='dateDisplay'>{selectedDate ? getMonthInWords(selectedDate) : ''}</p>
           <div className="timeSchedule">
             <div className="timeRow">
               <button className={selectedTime === '10:30 AM' ? 'selected' : ''} onClick={() => handleTimeClick('10:30 AM')}>
@@ -111,7 +111,9 @@ export const MovieSelected = ({ selectedDate }) => {
             SENIOR
           </button>
         </div>
-
+      </div>
+      
+      <div className='rightPanel'>
         <div className="summary">
           <p>Name Movie: <span className='summaryDetails'>x{selectedSeats.length}</span></p>
           <p>Total: <span className='summaryDetails'>{total}</span></p>
