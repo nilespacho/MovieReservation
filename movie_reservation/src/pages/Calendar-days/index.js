@@ -7,6 +7,17 @@ import { useNavigate } from 'react-router-dom';
 export default function CalendarDays(props) {
   const navigate = useNavigate();
 
+  const dayClick = (day) => {
+    if (day.date < new Date().setHours(0,0,0,0)) {
+      console.log(day.date); 
+      console.log(new Date());
+    } else {
+      props.changeCurrentDay(day.date);
+      console.log(day.date);
+      navigate('/gi', { state: { selectedDay: day } });
+    }
+  };
+
   let firstDayOfMonth = new Date(props.day.getFullYear(), props.day.getMonth(), 1);
   let weekdayOfFirstDay = firstDayOfMonth.getDay();
   let currentDays = [];
@@ -33,25 +44,20 @@ export default function CalendarDays(props) {
   }
 
   return (
-      <div className="table-content">
-      {
-        currentDays.map((day, index) => {
-          return (
-            <div key={index} className={"calendar-day" + (day.currentMonth ? " current" : " not") + (day.selected ? " selected" : "")}
-                  onClick={() => { 
-                    props.changeCurrentDay(day) 
-                    {console.log(day.date)} 
-                      navigate('/gi', { state: { selectedDay: day }})
-                    } 
-                  }
-            > 
-              <p>{day.number}</p>
-            </div>
-          )
-        })
-      }
-    </div>
-  )
+    <div className="table-content">
+    {
+      currentDays.map((day, index) => {
+        return (
+          <div key={index} className={"calendar-day" + (day.currentMonth ? " current" : " not") + (day.selected ? " selected" : "")}
+          onClick={() => dayClick(day)}
+          > 
+            <p>{day.number}</p>
+          </div>
+        )
+      })
+    }
+  </div>
+)
 }
 
 

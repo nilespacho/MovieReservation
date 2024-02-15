@@ -92,10 +92,9 @@ export const MovieSelected = ({ selectedDate }) => {
   
 
   const handleTimeClick = async (time) => {
-    setDateClicked(true);
     setSelectedTime(time);
     selectedTimeId = time;
-    
+    setDateClicked(true);
   
     // Fetch the premiere date after clicking a time
     try {
@@ -128,6 +127,7 @@ export const MovieSelected = ({ selectedDate }) => {
       } else {
         console.error('Error: No movie data found in the response');
       }
+      setDateClicked(true);
     } catch (error) {
       console.error('Error fetching premiere date:', error);
       // Handle errors appropriately
@@ -181,14 +181,9 @@ export const MovieSelected = ({ selectedDate }) => {
   
 
   const handleSeatClick = (seat) => {
-    // if (!selectedTime) {
-    //   setDateClicked(true);
-    //   return;
-    // }
-
-    if(dateClicked === false) {
+    if (!selectedTime) {
       setDateClicked(true);
-      return
+      return;
     }
     // Determine the price based on whether the movie is premier
     const pricePerSeat = premierCheck ? PREMIERPRICE : REGPRICE;
@@ -365,7 +360,7 @@ export const MovieSelected = ({ selectedDate }) => {
         <button className="checkoutButton" onClick={handleCheckoutClick}>
           CHECKOUT
         </button>
-        <button className="goBackButton">GO BACK</button>
+        <button className="goBackButton" onClick={() => navigate('/')}>GO BACK</button>
       </div>
 
       {showCheckOutModal && (
