@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { v4 as uuidv4 } from 'uuid'; // Import UUID library
 import '../stylesheets/MovieSelected.css';
 import axios from 'axios';
 
@@ -235,9 +235,21 @@ export const MovieSelected = ({ selectedDate }) => {
     }
   };
 
+  function generateUniqueReservationId() {
+    // Generate a timestamp-based ID
+    const timestamp = new Date().getTime();
+    // Append a random number to handle cases where multiple reservations are created within the same millisecond
+    const random = Math.floor(Math.random() * 1000000000); // Generate a random number between 0 and 999999999
+    const reservationId = timestamp.toString() + random.toString();
+    return reservationId.substring(0, 10); // Return the first 10 characters of the generated ID
+}
+
+
   const handleModalAction = (action) => {
+    const reservationId = generateUniqueReservationId(); // Implement this function
     // Prepare the reservation data
     const reservationData = {
+      reservation_id: reservationId,
       mov_ID: movieId,
       airing_time: selectedTime,
       seats: selectedSeats,

@@ -107,11 +107,11 @@ export const ReservationList = () => {
                         {/* Check if reservation is not deleted */}
                         {reservation.is_cancelled ? null : (
                             <li className='list'>
-                                ID: {reservation._id} <br />
+                                ID: {reservation.reservation_id} <br />
                                 Movie Name: {movieNames[reservation.mov_ID]} <br />
                                 Airing Time: {airingTime[reservation.airing_time]} <br />
                                 Seats: {reservation.seats.join(', ')} <br />
-                                <button className='deleteButton' onClick={() => toggleModal(reservation._id)}>Update</button>
+                                <button className='deleteButton' onClick={() => toggleModal(reservation._id)}>Cancel</button>
                             </li>
                         )}
                     </div>
