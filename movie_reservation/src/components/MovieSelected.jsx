@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid'; // Import UUID library
 import '../stylesheets/MovieSelected.css';
 import axios from 'axios';
 
@@ -29,7 +30,8 @@ export const MovieSelected = ({ selectedDate }) => {
   const [premierCheck, setPremierCheck] = useState(false);
   const [premierDate, setPremierDate] = useState(null);
   const [dateClicked, setDateClicked] = useState(false);
-  const [seatClicked, setSeatClicked] = useState(false)
+  const [isPremier, setIsPremier] = useState(false);
+
   
   
   useEffect(() => {
@@ -43,8 +45,6 @@ export const MovieSelected = ({ selectedDate }) => {
 
 
   useEffect(() => {
-    // console.log('Fetching airing times for selected date:', selectedDate);
-  
     const fetchAiringTime = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/airing-time');
@@ -65,6 +65,11 @@ export const MovieSelected = ({ selectedDate }) => {
   
         setAiringTime(selectedDateTimes);
         setFormattedAiringTime(formattedStartTimeArray);
+  
+        // Check if the movie is a premier based on your condition
+        // For example, you can use the first airing time to determine if it's a premier
+        const isFirstAiringPremier = selectedDateTimes.length > 0 && selectedDateTimes[0].isPremier;
+        setIsPremier(isFirstAiringPremier);
       } catch (error) {
         console.error('Error fetching airing times:', error);
       }
@@ -72,6 +77,7 @@ export const MovieSelected = ({ selectedDate }) => {
   
     fetchAiringTime();
   }, [selectedDate]);
+  
   
 
   useEffect(() => {
@@ -92,6 +98,8 @@ export const MovieSelected = ({ selectedDate }) => {
   
 
   const handleTimeClick = async (time) => {
+    setSelectedSeats([])
+    setTotal(0)
     setSelectedTime(time);
     selectedTimeId = time;
     setDateClicked(true);
@@ -206,8 +214,13 @@ export const MovieSelected = ({ selectedDate }) => {
     } else {
       const updatedSeats = [...selectedSeats];
       updatedSeats.splice(index, 1);
-      setSelectedSeats(updatedSeats);
+      if(updatedSeats.length === 0) {
+        setSelectedSeats(updatedSeats);
+        setTotal(0)
+      } else {
+        setSelectedSeats(updatedSeats);
       setTotal(total - pricePerSeat);
+      }
     }
   };
   
@@ -218,11 +231,12 @@ export const MovieSelected = ({ selectedDate }) => {
 
   const handleSeniorCountSubmit = () => {
     setShowSeniorModal(false);
-    if (selectedSeats.length > 0) {
+    if (selectedSeats.length > 0 && selectedSeats.length >= seniorCount) {
       const total = (selectedSeats.length - seniorCount) * REGPRICE + seniorCount * (REGPRICE * 0.8);
       setTotal(total < 0 ? 0 : total);
     } else {
-      setTotal(0);
+      // setTotal(0);
+      return
     }
   };
 
@@ -312,7 +326,7 @@ export const MovieSelected = ({ selectedDate }) => {
                   </button>
                 </div>
               ))}
-            </div>
+          </div>
         </div>
         {!premierCheck && (
     <div className='senior'>
@@ -429,7 +443,7 @@ export const MovieSelected = ({ selectedDate }) => {
         )}
 
         {/* Time Not Selected Modal */}
-        {dateClicked && (
+        {dateClicked && !selectedTime && (
           <div className="modal">
             <div className="modalContent">
               <p>Please select a time schedule first!</p>
