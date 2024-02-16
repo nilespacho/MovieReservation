@@ -257,7 +257,6 @@ export const MovieSelected = ({ selectedDate }) => {
     return reservationId.substring(0, 10); // Return the first 10 characters of the generated ID
 }
 
-
   const handleModalAction = (action) => {
     const reservationId = generateUniqueReservationId(); // Implement this function
     // Prepare the reservation data
