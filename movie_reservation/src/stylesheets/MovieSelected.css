@@ -84,6 +84,10 @@ body{
   color: white;
 }
 
+.timeSchedule .premierTime {
+  color: gold; /* Set the desired color for premier time */
+}
+
 .senior {
   display: flex;
   justify-content: center;

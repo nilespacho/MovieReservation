@@ -197,15 +197,15 @@ export const MovieSelected = ({ selectedDate }) => {
     // Determine the price based on whether the movie is premier
     const pricePerSeat = premierCheck ? PREMIERPRICE : REGPRICE;
   
-    if (selectedReservation) {
-      // If a matching reservation is found
-      const reservationSeats = selectedReservation.seats;
+    // if (selectedReservation) {
+    //   // If a matching reservation is found
+    //   const reservationSeats = selectedReservation.seats;
   
-      if (reservationSeats.includes(seat)) {
-        // If the clicked seat is in the reservation, do nothing
-        return;
-      }
-    }
+    //   if (reservationSeats.includes(seat)) {
+    //     // If the clicked seat is in the reservation, do nothing
+    //     return;
+    //   }
+    // }
   
     const index = selectedSeats.indexOf(seat);
     if (index === -1) {
@@ -321,6 +321,7 @@ export const MovieSelected = ({ selectedDate }) => {
           <div className="timeSchedule">
               {formattedAiringTime.map((time) => (
                 <div key={time._id} className="timeRow">
+                  {console.log(`TIme: ${selectedDate}}`)}
                   <button className={selectedTime === time._id ? 'selected' : ''} onClick={() => handleTimeClick(time._id)}>
                     {time.formattedTime}
                   </button>
