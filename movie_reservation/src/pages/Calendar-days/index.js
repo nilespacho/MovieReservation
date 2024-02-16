@@ -45,18 +45,23 @@ export default function CalendarDays(props) {
 
   return (
     <div className="table-content">
-    {
-      currentDays.map((day, index) => {
+      {currentDays.map((day, index) => {
+        const dayClasses =
+          "calendar-day" +
+          (day.currentMonth ? (day.date < new Date().setHours(0, 0, 0, 0) ? " not" : " current") : "") +
+          (day.selected ? " selected" : "");
+
         return (
-          <div key={index} className={"calendar-day" + (day.currentMonth ? " current" : " not") + (day.selected ? " selected" : "")}
-          onClick={() => dayClick(day)}
-          > 
+          <div
+            key={index}
+            className={dayClasses}
+            onClick={() => dayClick(day)}
+          >
             <p>{day.number}</p>
           </div>
-        )
-      })
-    }
-  </div>
+        );
+      })}
+    </div>
 )
 }
 
