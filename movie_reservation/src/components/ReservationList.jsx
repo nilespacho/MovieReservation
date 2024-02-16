@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../stylesheets/ReservationList.css';
 import axios from 'axios';
 
 export const ReservationList = () => {
+    const navigate = useNavigate()
     const [showModal, setShowModal] = useState(false);
     const [selectedReservationId, setSelectedReservationId] = useState(null);
     const [reservations, setReservations] = useState([]);
@@ -98,6 +100,7 @@ export const ReservationList = () => {
 
     return (
         <div className='container'>
+            <button className="goBackButton" onClick={() => navigate('/')}>GO BACK</button>
             <div className='titleContainer'>
                 <h3 className='title'>Reservation List</h3>
             </div>
