@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'; // Import UUID library
 import '../stylesheets/MovieSelected.css';
 import axios from 'axios';
 
-export const MovieSelected = ({ }) => {
+export const MovieSelected = ({  }) => {
   const navigate = useNavigate()
   const REGPRICE = 350;
   const PREMIERPRICE = 500
@@ -44,6 +44,7 @@ export const MovieSelected = ({ }) => {
 
   useEffect(() => {
     setSelectedDate(localStorage.getItem('selectedDate'));
+    console.log(`selectedDate: ${selectedDate}`);
   }, []);
 
 
@@ -114,8 +115,10 @@ export const MovieSelected = ({ }) => {
         const movieObject = response.data.movie; // Directly access the movie object
         const premierDateCheck = movieObject ? movieObject.premiereDate : null;
         const premierConvertedTime = movieObject ? new Date(movieObject.premiereDate).toLocaleDateString('en-US') : null;
-        const selectedDateFormatted = selectedDate.toLocaleDateString('en-US');
+        const parsedDate = new Date(selectedDate);
+        const selectedDateFormatted = parsedDate.toLocaleDateString('en-US');
         
+        console.log(`selectedDate: ${selectedDate}`);
         console.log(`premiereDate: ${premierDate}`);
         console.log(`premiereDateCheck: ${premierDateCheck}`);
         console.log(`selectedDate: ${selectedDateFormatted}`);

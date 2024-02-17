@@ -65,13 +65,23 @@ export const ReservationList = () => {
 
     const formatDateTime = (dateTimeString) => {
         const date = new Date(dateTimeString);
+    
+        // Subtract 8 hours to adjust to UTC-8 timezone
+        date.setHours(date.getHours() - 8);
+    
+        // Format the date and time
         const monthNames = ["January", "February", "March", "April", "May", "June",
                             "July", "August", "September", "October", "November", "December"];
         const month = monthNames[date.getMonth()];
         const day = date.getDate().toString().padStart(2, '0');
         const year = date.getFullYear().toString();
-        return `${month} ${day}, ${year}`;
+        const hours = date.getHours() > 12 ? (date.getHours() - 12).toString().padStart(2, '0') : date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const period = date.getHours() >= 12 ? 'PM' : 'AM'; // Determine if it's AM or PM
+    
+        return `${month} ${day}, ${year} ${hours}:${minutes} ${period}`;
     };
+    
     
     const toggleModal = (reservationId) => {
         setSelectedReservationId(reservationId);
@@ -114,7 +124,7 @@ export const ReservationList = () => {
                             <li className='list'>
                                 ID: {reservation.reservation_id} <br />
                                 Movie Name: {movieNames[reservation.mov_ID]} <br />
-                                Airing Time: {airingTime[reservation.airing_time]} <br />
+                                Airing Date and Time: {airingTime[reservation.airing_time]} <br />
                                 Seats: {reservation.seats.join(', ')} <br />
                                 <button className='deleteButton' onClick={() => toggleModal(reservation._id)}>Cancel</button>
                             </li>
