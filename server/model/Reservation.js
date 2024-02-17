@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const reservationSchema = new mongoose.Schema({
     reservation_id: {
-        type: Number,
-        unique: true,
-        required: true
+        type: String,
+        required: true,
+        unique: true // Ensure reservation IDs are unique
     },
     mov_ID: {
         type: mongoose.Schema.Types.ObjectId,
@@ -37,14 +37,8 @@ const reservationSchema = new mongoose.Schema({
     is_cancelled: Boolean,
 });
 
-// Add a pre-save hook to generate the reservation_id
-reservationSchema.pre('save', async function(next) {
-    if (this.isNew) {
-        const count = await Reservation.countDocuments();
-        this.reservation_id = count + 1;
-    }
-    next();
-});
+
+
 
 const Reservation = mongoose.model('Reservation', reservationSchema);
 
