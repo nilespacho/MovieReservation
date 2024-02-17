@@ -194,33 +194,46 @@ export const MovieSelected = ({ }) => {
 
   const handleSeatClick = (seat) => {
     if (!selectedTime) {
-      setDateClicked(true);
-      return;
+        setDateClicked(true);
+        return;
     }
+
     // Determine the price based on whether the movie is premier
     const pricePerSeat = premierCheck ? PREMIERPRICE : REGPRICE;
-  
-    const index = selectedSeats.indexOf(seat);
-    if (index === -1) {
-      if(seniorCount !== 0) {
-        setSelectedSeats([...selectedSeats, seat]);
-        setTotal(total + pricePerSeat);
-      } else {
-        setSelectedSeats([...selectedSeats, seat]);
-        setTotal(total + pricePerSeat);
-      }
+
+    // Check if the selected seat is already in the list of selected seats
+    const isAlreadySelected = selectedSeats.includes(seat);
+
+    // Calculate the total price considering the senior discount
+    let totalWithDiscount = 0;
+
+    if (isAlreadySelected) {
+        // Seat is already selected, remove it from the list and recalculate the total
+        const updatedSeats = selectedSeats.filter(selectedSeat => selectedSeat !== seat);
+        setSelectedSeats(updatedSeats);
+
+        // Calculate the new total with the updated senior count
+        if (updatedSeats.length >= seniorCount) {
+            totalWithDiscount = (updatedSeats.length - seniorCount) * pricePerSeat + seniorCount * (pricePerSeat * 0.8);
+        } else {
+            totalWithDiscount = updatedSeats.length * pricePerSeat;
+        }
     } else {
-      const updatedSeats = [...selectedSeats];
-      updatedSeats.splice(index, 1);
-      if(updatedSeats.length === 0) {
-        setSelectedSeats(updatedSeats);
-        setTotal(0)
-      } else {
-        setSelectedSeats(updatedSeats);
-        setTotal(total - pricePerSeat);
-      }
+        // Seat is not selected, add it to the list and recalculate the total
+        setSelectedSeats([...selectedSeats, seat]);
+
+        // Calculate the new total with the updated senior count
+        if ((selectedSeats.length + 1) >= seniorCount) {
+            totalWithDiscount = (selectedSeats.length + 1 - seniorCount) * pricePerSeat + seniorCount * (pricePerSeat * 0.8);
+        } else {
+            totalWithDiscount = (selectedSeats.length + 1) * pricePerSeat;
+        }
     }
-  };
+
+    // Set the total ensuring it's not negative
+    setTotal(Math.max(totalWithDiscount, 0));
+};
+
   
 
   const handleSeniorClick = () => {
