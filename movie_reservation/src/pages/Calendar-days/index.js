@@ -3,18 +3,42 @@ import ProtectedRoute from '../../components/ProtectedRoute';
 import Home from '../Home';
 
 import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
 
 export default function CalendarDays(props) {
   const navigate = useNavigate();
+  const [airingTimes, setAiringTimes] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/airing-time');
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        setAiringTimes(data.airingTimes);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  const latestEndTime = airingTimes.length > 0 ? new Date(airingTimes[airingTimes.length - 2].startTime) : new Date();
+  console.log(latestEndTime)
+
 
   const dayClick = (day) => {
     if (day.date < new Date().setHours(0,0,0,0)) {
       console.log(day.date); 
       console.log(new Date());
     } else {
-      props.changeCurrentDay(day.date);
-      console.log(day.date);
-      navigate('/gi', { state: { selectedDay: day } });
+      if(day.date < latestEndTime) {
+        props.changeCurrentDay(day.date);
+        console.log(day.date);
+        navigate('/gi', { state: { selectedDay: day } });
+      }
     }
   };
 
@@ -45,18 +69,23 @@ export default function CalendarDays(props) {
 
   return (
     <div className="table-content">
-    {
-      currentDays.map((day, index) => {
+      {currentDays.map((day, index) => {
+        const dayClasses =
+          "calendar-day" +
+          (day.currentMonth ? (day.date < new Date().setHours(0, 0, 0, 0) || day.date >= latestEndTime ? " not" : " current") : "") +
+          (day.selected ? " selected" : "");
+
         return (
-          <div key={index} className={"calendar-day" + (day.currentMonth ? " current" : " not") + (day.selected ? " selected" : "")}
-          onClick={() => dayClick(day)}
-          > 
+          <div
+            key={index}
+            className={dayClasses}
+            onClick={() => dayClick(day)}
+          >
             <p>{day.number}</p>
           </div>
-        )
-      })
-    }
-  </div>
+        );
+      })}
+    </div>
 )
 }
 

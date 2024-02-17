@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 // Define your controller handler function for adding a reservation
 const addReservation = async (req, res) => {
     try {
-        const { reservation_id,mov_ID, airing_time, seats, total_price, is_cancelled } = req.body;
+        const { reservation_id, mov_ID, airing_time, seats, total_price, is_cancelled } = req.body;
 
         // Check if mov_ID and airing_time are valid ObjectId strings
         if (!mongoose.isValidObjectId(mov_ID) || !mongoose.isValidObjectId(airing_time)) {

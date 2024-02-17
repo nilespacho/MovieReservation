@@ -2,6 +2,14 @@ body{
   background-color: #09131E;
 }
 
+
+.premierTimeRow {
+  background-color: black; /* Your preferred color for premier time rows */;
+}
+.notpremierTimeRow {
+  background-color: #007bff;
+}
+
 .reserved {
   background-color: grey; /* or any other style to darken the seat */
   color: white; /* text color for better visibility */
@@ -74,6 +82,10 @@ body{
 .timeSchedule button.selected {
   background-color: #007bff;
   color: white;
+}
+
+.timeSchedule .premierTime {
+  color: gold; /* Set the desired color for premier time */
 }
 
 .senior {

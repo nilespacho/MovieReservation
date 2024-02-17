@@ -42,11 +42,20 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
     }
   };
   
+  // useEffect(() => {
+  //   if (location.state?.selectedDay) {
+  //     onSelectedDate(location.state.selectedDay.date);
+  //   }
+  // }, [location.state, onSelectedDate]);
+
   useEffect(() => {
     if (location.state?.selectedDay) {
-      onSelectedDate(location.state.selectedDay.date);
+        onSelectedDate(location.state.selectedDay.date);
+        localStorage.setItem('selectedDate', location.state.selectedDay.date);
     }
-  }, [location.state, onSelectedDate]);
+}, [location.state, onSelectedDate]);
+
+
 
   return (
     <div className="movieSelect"> {/* Apply the movieSelect class */}

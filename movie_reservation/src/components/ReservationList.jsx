@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../stylesheets/ReservationList.css';
 import axios from 'axios';
 
@@ -8,6 +9,7 @@ export const ReservationList = () => {
     const [reservations, setReservations] = useState([]);
     const [movieNames, setMovieNames] = useState({});
     const [airingTime, setAiringTime] = useState({});
+    const navigate = useNavigate()
 
     useEffect(() => {
         // Fetch reservations data when component mounts
@@ -98,6 +100,9 @@ export const ReservationList = () => {
 
     return (
         <div className='container'>
+        <button className="goBackButton" onClick={() => navigate('/')}>
+                GO BACK
+            </button>
             <div className='titleContainer'>
                 <h3 className='title'>Reservation List</h3>
             </div>
