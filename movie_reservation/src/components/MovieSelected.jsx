@@ -41,9 +41,10 @@ export const MovieSelected = ({ }) => {
       console.log(`MovieID ${location.state.movieId}`);
     }
   }, [location.state]);
+
   useEffect(() => {
     setSelectedDate(localStorage.getItem('selectedDate'));
-}, []);
+  }, []);
 
 
   useEffect(() => {
@@ -308,6 +309,19 @@ export const MovieSelected = ({ }) => {
     return time;
   };
 
+  const getCurrentTime = () => {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+  
+    // Formatting hours and minutes to display with leading zeros if needed
+    const formattedHours = hours < 10 ? `0${hours}` : hours;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  
+    // Returning the current time in "hh:mm" format
+    return `${formattedHours}:${formattedMinutes}`;
+  };
+
   return (
           
     <div className="containers">
@@ -315,14 +329,23 @@ export const MovieSelected = ({ }) => {
         <div className="dateSelected">
         <p>{selectedDate ? getMonthInWords(selectedDate) : ''}</p>
           <div className="timeSchedule">
-              {formattedAiringTime.map((time) => (
-                <div key={time._id} className="timeRow">
-                  {console.log(`TIme: ${selectedDate}}`)}
-                  <button className={selectedTime === time._id ? 'selected' : ''} onClick={() => handleTimeClick(time._id)}>
-                    {time.formattedTime}
-                  </button>
-                </div>
-              ))}
+
+            {/* still not sure if this works. just get this back */}
+          {formattedAiringTime.map((time) => (
+              <div key={time._id} className="timeRow">
+                  {getCurrentTime() < time.formattedTime ? (
+                      <button
+                          key={time._id}
+                          className={selectedTime === time._id ? 'selected' : ''}
+                          onClick={() => handleTimeClick(time._id)}
+                      >
+                          {time.formattedTime}
+                      </button>
+                  ) : null}
+              </div>
+          ))}
+
+
           </div>
         </div>
         {!premierCheck && (
