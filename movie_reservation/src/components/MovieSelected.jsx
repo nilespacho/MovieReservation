@@ -21,8 +21,8 @@ export const MovieSelected = ({  }) => {
   const [airingTime, setAiringTime] = useState([]);
   let time;
   const [formattedAiringTime, setFormattedAiringTime] = useState([]);
-  const [reservations, setReservations] = useState([]);
-  const [selectedReservation, setSelectedReservation] = useState(null);
+  // const [reservations, setReservations] = useState([]);
+  // const [selectedReservation, setSelectedReservation] = useState(null);
   const location = useLocation();
   const [movieId, setMovieId] = useState(null);
 
@@ -30,7 +30,7 @@ export const MovieSelected = ({  }) => {
   const [premierCheck, setPremierCheck] = useState(false);
   const [premierDate, setPremierDate] = useState(null);
   const [dateClicked, setDateClicked] = useState(false);
-  const [isPremier, setIsPremier] = useState(false);
+  // const [isPremier, setIsPremier] = useState(false);
   const [selectedDate, setSelectedDate] = useState(localStorage.getItem('selectedDate'));
   
   
@@ -72,8 +72,8 @@ export const MovieSelected = ({  }) => {
   
         // Check if the movie is a premier based on your condition
         // For example, you can use the first airing time to determine if it's a premier
-        const isFirstAiringPremier = selectedDateTimes.length > 0 && selectedDateTimes[0].isPremier;
-        setIsPremier(isFirstAiringPremier);
+        // const isFirstAiringPremier = selectedDateTimes.length > 0 && selectedDateTimes[0].isPremier;
+        // setIsPremier(isFirstAiringPremier);
       } catch (error) {
         console.error('Error fetching airing times:', error);
       }
@@ -207,35 +207,28 @@ export const MovieSelected = ({  }) => {
     // Check if the selected seat is already in the list of selected seats
     const isAlreadySelected = selectedSeats.includes(seat);
 
+    // Calculate the new number of selected seats after adding or removing the current seat
+    const newSelectedSeats = isAlreadySelected
+        ? selectedSeats.filter(selectedSeat => selectedSeat !== seat) // Remove the seat if it's already selected
+        : [...selectedSeats, seat]; // Add the seat if it's not already selected
+
     // Calculate the total price considering the senior discount
-    let totalWithDiscount = 0;
+    let totalWithDiscount;
 
-    if (isAlreadySelected) {
-        // Seat is already selected, remove it from the list and recalculate the total
-        const updatedSeats = selectedSeats.filter(selectedSeat => selectedSeat !== seat);
-        setSelectedSeats(updatedSeats);
-
-        // Calculate the new total with the updated senior count
-        if (updatedSeats.length >= seniorCount) {
-            totalWithDiscount = (updatedSeats.length - seniorCount) * pricePerSeat + seniorCount * (pricePerSeat * 0.8);
-        } else {
-            totalWithDiscount = updatedSeats.length * pricePerSeat;
-        }
+    if (premierCheck) {
+        // If it's a premier, no senior discount is applied
+        totalWithDiscount = newSelectedSeats.length * pricePerSeat;
     } else {
-        // Seat is not selected, add it to the list and recalculate the total
-        setSelectedSeats([...selectedSeats, seat]);
-
         // Calculate the new total with the updated senior count
-        if ((selectedSeats.length + 1) >= seniorCount) {
-            totalWithDiscount = (selectedSeats.length + 1 - seniorCount) * pricePerSeat + seniorCount * (pricePerSeat * 0.8);
-        } else {
-            totalWithDiscount = (selectedSeats.length + 1) * pricePerSeat;
-        }
+        const seatsAfterDiscount = Math.max(newSelectedSeats.length - seniorCount, 0);
+        totalWithDiscount = seatsAfterDiscount * pricePerSeat + Math.min(newSelectedSeats.length, seniorCount) * (pricePerSeat * 0.8);
     }
 
-    // Set the total ensuring it's not negative
-    setTotal(Math.max(totalWithDiscount, 0));
+    // Set the selected seats and total
+    setSelectedSeats(newSelectedSeats);
+    setTotal(totalWithDiscount);
 };
+
 
   
 
