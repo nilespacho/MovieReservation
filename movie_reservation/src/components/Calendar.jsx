@@ -35,7 +35,6 @@ export default class Calendar extends Component {
                 })
               }
             </div>
-             {/* Button to navigate to reservation list screen */}
              <Link to="/Reservation">
               <button className="reservation-list-button">Reservation List</button>
             </Link>   

@@ -64,20 +64,19 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
       </div>
       <div className="movie-grid">
       {movies.movies &&
-  movies.movies.map((movie, index) => (
-    <div key={movie._id} className="movie-item">
-      <div className="cinema-data">{cinemasData[index].name}</div>
-      <img
-        src={movie.poster}
-        alt={movie.title}
-        onClick={() => handleMovieClick(movie._id, movie.premiereDate, movie.is_premier)}
-        className={movie.is_premier ? (new Date(selectedDate) < new Date(movie.premiereDate) ? 'not-clickable' : '') : ''}
-      />
-      <div className="movie-info">
-        <h2>{movie.title}</h2>
-      </div>
-    </div>
-  ))}
+ movies.movies.map((movie, index) => (
+  <div key={movie._id} className="movie-item">
+    <div className="cinema-data">{cinemasData[index].name}</div>
+    <img
+      src={movie.poster}
+      alt={movie.title}
+      onClick={() => handleMovieClick(movie._id, movie.premiereDate, movie.is_premier)}
+      className={movie.is_premier ? (new Date(selectedDate) < new Date(movie.premiereDate) ? 'not-clickable' : '') : ''}
+    />
+    
+  </div>
+))}
+
 
 
       </div>

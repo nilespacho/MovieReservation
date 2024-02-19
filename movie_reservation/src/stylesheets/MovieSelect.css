@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 .reserved {
   background-color: grey; /* or any other style to darken the seat */
@@ -16,14 +16,13 @@ body {
   background-attachment: fixed;
 }
 
-/* Date and time styles */
 .date {
   position: absolute;
   top: 95px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 34px; /* Responsive font size */
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .date-time {
@@ -34,13 +33,12 @@ body {
 
 .current-time {
   font-size: 2.5vw; /* Responsive font size */
-  color: #FFFFFF;
+  color: #ffffff;
   position: absolute;
   top: 5px;
   right: 40px;
 }
 
-/* Movie grid styles */
 .movie-grid {
   display: flex;
   justify-content: center;
@@ -66,12 +64,10 @@ body {
   transition: transform 0.3s ease;
 }
 
-/* Add hover effect */
 .movie-item img:hover {
-  transform: translateY(-5px); 
+  transform: translateY(-5px);
 }
 
-/* Media queries for responsiveness */
 @media (max-width: 990px) {
   .movie-item {
     flex: 0 0 calc(33.33% - 1%);
@@ -84,19 +80,18 @@ body {
   }
 }
 
-/* Movie info styles */
 .cinema-data {
   font-size: 2.5vw; /* Responsive font size */
   font-weight: bold;
   text-align: center;
   margin-bottom: 1vw; /* Responsive margin bottom */
   margin-top: 9vw; /* Responsive margin top */
-  color: #ECF0F1;
+  color: #ecf0f1;
 }
 
 .movie-info h2 {
   margin-top: 0.5vw; /* Responsive margin top */
   text-align: center;
   font-size: 1.2vw; /* Responsive font size */
-  color: #ECF0F1; /* Light gray text for movie titles */
+  color: #ecf0f1; /* Light gray text for movie titles */
 }

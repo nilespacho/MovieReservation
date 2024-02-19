@@ -2,7 +2,6 @@ body{
   background-color: #09131E;
 }
 
-
 .premierTimeRow {
   background-color: black; /* Your preferred color for premier time rows */;
 }
@@ -97,7 +96,6 @@ body{
 .seniorButton {
   width: 190px;
   height: 60px;
-  /* padding: 10px; */
   border-radius: 10px;
   background-color: #BE19C1;
   border: 1px solid #2C3E50;
@@ -187,7 +185,6 @@ body{
 }
 
 .summary {
-  /* margin-top: 20px; */
   font-size: 22px;
   text-align: left;
   font-weight: bold;
@@ -249,7 +246,6 @@ body{
   color: #2D8D00;
 }
 
-/* MODALS */
 .modal {
   position: fixed;
   top: 0;

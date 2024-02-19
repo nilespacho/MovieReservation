@@ -1,151 +1,149 @@
 .Calendar {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center items horizontally */
-    height: 100vh;
-    background-image: url("mainn.png");
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  height: 100vh;
+  background-image: url("mainn.png");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
 }
 
 .reservation-list-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #ffffff; /* Header background color */
-    border: 0.15px solid #0f0808;
-    color: #09131E;
-    border-radius: 5px;
-    padding: 20px 4px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: hide;
-    transition: background-color 0.3s ease;
-    z-index: 1000; /* Ensure the button is above other elements */
-  }
-  
-  .reservation-list-button:hover {
-    background-color: #CA2222;
-  }
-  
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff; /* Header background color */
+  border: 0.15px solid #0f0808;
+  color: #09131e;
+  border-radius: 5px;
+  padding: 20px 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: hide;
+  transition: background-color 0.3s ease;
+  z-index: 1000; /* Ensure the button is above other elements */
+}
+
+.reservation-list-button:hover {
+  background-color: #ca2222;
+}
+
 .calendar {
-    width: 1000px;
-    height: 470px;
-    display: flex;
-    top: 160px;
-    position:absolute;
-    flex-direction: column;
-    background-color: #09131E;
-    background: #09131E;
-    border: 0.25px solid #CA2222;
-    box-shadow: 0px 16px 32px rgba(202, 34, 34, 0.25);
-    border-radius: 50px;
-    padding-left: 3px;
-    overflow: hidden;
+  width: 1000px;
+  height: 470px;
+  display: flex;
+  top: 160px;
+  position: absolute;
+  flex-direction: column;
+  background-color: #09131e;
+  background: #09131e;
+  border: 0.25px solid #ca2222;
+  box-shadow: 0px 16px 32px rgba(202, 34, 34, 0.25);
+  border-radius: 50px;
+  padding-left: 3px;
+  overflow: hidden;
 }
 
 .calendar-header {
-    box-sizing: border-box;
-    width: 550px;
-    height: 100px;
-    position: fixed;
-    top: 20%; /* Position at 50% from the top */
-    left: 50%; /* Position at 50% from the left */
-    transform: translate(-50%, -50%); /* Center the element */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #09131E; /* Header background color */
-    border: 0.15px solid #CA2222;
-    box-shadow: inset 0px -16px 32px rgba(202, 34, 34, 0.25);
-    border-radius: 20px;
+  box-sizing: border-box;
+  width: 550px;
+  height: 100px;
+  position: fixed;
+  top: 20%; /* Position at 50% from the top */
+  left: 50%; /* Position at 50% from the left */
+  transform: translate(-50%, -50%); /* Center the element */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #09131e; /* Header background color */
+  border: 0.15px solid #ca2222;
+  box-shadow: inset 0px -16px 32px rgba(202, 34, 34, 0.25);
+  border-radius: 20px;
 }
 
-
 .calendar-header h2 {
-    text-transform: uppercase;
-    font-size: 60px;
-    font-weight: 1000;
-    color: #ffffff;  
+  text-transform: uppercase;
+  font-size: 60px;
+  font-weight: 1000;
+  color: #ffffff;
 }
 
 .calendar-body {
-    width: 100%;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .table-header {
-    height: 5.5rem;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    
+  height: 5.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
 }
 
 .weekday {
-    width: 100px;
-    height: 130px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100px;
+  height: 130px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .weekday p {
-    color: white;
-    text-transform: uppercase;
-    font-size: 22px;
-    font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  font-size: 22px;
+  font-weight: bold;
 }
 
 .table-content {
-    width: 100%;
-    margin-left: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    box-sizing: border-box;
-    gap: 40px;
-    padding-left: 0.3rem;
+  width: 100%;
+  margin-left: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  gap: 40px;
+  padding-left: 0.3rem;
 }
 
 .calendar-day {
-    width: 100px;
-    height: 40px;
-    position: relative;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2em;
-    font-weight: 800;
+  width: 100px;
+  height: 40px;
+  position: relative;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  font-weight: 800;
 }
 
 .calendar-day:hover {
-    background-color: rgba(0, 0, 0, .10); /* Light gray hover effect */
+  background-color: rgba(0, 0, 0, 0.1); /* Light gray hover effect */
 }
 
 .calendar-day p {
-    position: absolute;
-    color: #333333; /* Dark gray text color */
+  position: absolute;
+  color: #333333; /* Dark gray text color */
 }
 .calendar-day p:hover {
-    color: white; /* Change text color to white on hover */
+  color: white; /* Change text color to white on hover */
 }
 
 .current {
-    background-color: #ffffff; /* Light brown current day background color */
-    border: 1px solid #a6a6a6;
+  background-color: #ffffff; /* Light brown current day background color */
+  border: 1px solid #a6a6a6;
 }
 
 .current p {
-    color: #000000;
+  color: #000000;
 }
 
 .selected p {
-    color: #cc0000; /* Red selected day text color */
-    font-weight: bold;
+  color: #cc0000; /* Red selected day text color */
+  font-weight: bold;
 }
