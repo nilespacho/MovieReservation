@@ -27,6 +27,7 @@ export const MovieSelected = ({}) => {
   const [premierDate, setPremierDate] = useState(null);
   const [dateClicked, setDateClicked] = useState(false);
   const [showCheckoutModalGoBack,setShowCheckoutModalGoBack] = useState(false)
+  const [showResponse, setShowResponse] = useState([])
 
   const [selectedDate, setSelectedDate] = useState(
     localStorage.getItem("selectedDate")
@@ -284,13 +285,14 @@ export const MovieSelected = ({}) => {
             reservationData
           )
           .then((response) => {
+            setShowResponse(response.data)
             console.log("Reservation added successfully:", response.data);
             setShowCheckOutModal(false);
             setShowCountdownModal(true);
             setTimeout(() => {
               setShowCountdownModal(false);
               navigate("/");
-            }, 2000);
+            }, 3000);
           })
           .catch((error) => {
             console.error("Error adding reservation:", error);
@@ -477,8 +479,8 @@ export const MovieSelected = ({}) => {
       {showCountdownModal && (
         <div className="modal">
           <div className="modalContent">
-            <p>Reservation successful!</p>
-            <p>Redirecting in 2 seconds...</p>
+            <p>Your Reservation Id is: {showResponse.reservation.reservation_id}</p>
+            <p>Returning to HomeScreen in 3 seconds...</p>
           </div>
         </div>
       )}

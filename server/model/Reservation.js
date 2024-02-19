@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 
 const reservationSchema = new mongoose.Schema({
   reservation_id: {
-    type: String,
-    required: true,
-    unique: true, // Ensure reservation IDs are unique
-  },
+    type: Number,
+    unique: true,
+    required: true
+},
   mov_ID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Movie",
@@ -35,6 +35,14 @@ const reservationSchema = new mongoose.Schema({
   },
   total_price: Number,
   is_cancelled: Boolean,
+});
+
+reservationSchema.pre('save', async function(next) {
+  if (this.isNew) {
+      const count = await Reservation.countDocuments();
+      this.reservation_id = count + 1;
+  }
+  next();
 });
 
 const Reservation = mongoose.model("Reservation", reservationSchema);
