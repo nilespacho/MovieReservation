@@ -335,12 +335,12 @@ export const MovieSelected = ({}) => {
 
   return (
     <div className="containers">
-      <div className="leftPanel">
-        <div className="dateSelected">
+      <div className="left-panel">
+        <div className="date-selected">
           <p>{selectedDate ? getMonthInWords(selectedDate) : ""}</p>
-          <div className="timeSchedule">
+          <div className="time-schedule">
             {formattedAiringTime.map((time) => (
-              <div key={time._id} className="timeRow">
+              <div key={time._id} className="time-row">
                 {console.log(`selectedDate ${getDateSelected(selectedDate)}`)}
                 {console.log(`currentDate ${getCurrentTime()}`)}
                 {(getCurrentTime() < time.formattedTime) || (getDateSelected(selectedDate) > new Date().getDate()) ? (
@@ -358,13 +358,13 @@ export const MovieSelected = ({}) => {
         </div>
         {!premierCheck && (
           <div className="senior">
-            <button className="seniorButton" onClick={handleSeniorClick}>
+            <button className="senior-button" onClick={handleSeniorClick}>
               SENIOR
             </button>
           </div>
         )}
       </div>
-      <div className="seatSelection">
+      <div className="seat-selection">
         {[..."HGFEDCBA"].map((row) => (
           <div key={row} className="row">
             {[...Array(5).keys()].map((col) => {
@@ -396,31 +396,31 @@ export const MovieSelected = ({}) => {
         ))}
         <div className="screen">SCREEN</div>
       </div>
-      <div className="rightPanelContainer">
-        <div className="textContainer">
+      <div className="right-panel-container">
+        <div className="text-container">
           <h1>{movie.title}</h1>
         </div>
 
-        <div className="rightPanel">
+        <div className="right-panel">
           <div className="summary">
             <p>
               Ticket:{" "}
-              <span className="summaryDetails">x{selectedSeats.length}</span>
+              <span className="summary-details">x{selectedSeats.length}</span>
             </p>
             <p>
-              Total: <span className="summaryDetails">{total}</span>
+              Total: <span className="summary-details">{total}</span>
             </p>
           </div>
         </div>
-        <div className="buttonPanel">
+        <div className="button-panel">
           <button
-            className="checkoutButton"
+            className="checkout-button"
             onClick={() => handleCheckoutClick("checkout")}
           >
             CHECKOUT
           </button>
           <button
-            className="goBackButton"
+            className="goback-button"
             onClick={() => handleCheckoutClick("home")}
           >
             GO BACK
@@ -429,11 +429,11 @@ export const MovieSelected = ({}) => {
       </div>
       {showCheckOutModal && (
         <div className="modal">
-          <div className="modalContent">
+          <div className="modal-content">
             <p>Please select both time and seats before checking out.</p>
-            <div className="checkoutModalButtons">
+            <div className="checkout-modal-buttons">
               <button
-                className="okButton"
+                className="no-button"
                 onClick={() => setShowCheckOutModal(false)}
               >
                 OK
@@ -444,17 +444,17 @@ export const MovieSelected = ({}) => {
       )}
       {showCheckOutModal && (
         <div className="modal">
-          <div className="modalContent">
+          <div className="modal-content">
             <p>Proceed?</p>
-            <div className="checkoutModalButtons">
+            <div className="checkout-modal-buttons">
               <button
-                className="yesButton"
+                className="yes-button"
                 onClick={() => handleModalAction("proceed")}
               >
                 YES
               </button>
               <button
-                className="noButton"
+                className="no-button"
                 onClick={() => handleModalAction("cancel")}
               >
                 NO
@@ -465,19 +465,19 @@ export const MovieSelected = ({}) => {
       )}
       {showSeniorModal && (
         <div className="modal">
-          <div className="modalContent">
-            <p className="seniorNumber">Number of seniors:</p>
+          <div className="modal-content">
+            <p className="senior-number">Number of seniors:</p>
             <input
-              className="seniorInput"
+              className="senior-input"
               type="number"
               value={seniorCount}
               onChange={(e) => setSeniorCount(parseInt(e.target.value))}
               min="0"
               max={selectedSeats.length}
             />
-            <div className="seniorModalButton">
+            <div className="senior-modal-button">
               <button
-                className="submitButton"
+                className="submit-button"
                 onClick={handleSeniorCountSubmit}
               >
                 Submit
@@ -488,7 +488,7 @@ export const MovieSelected = ({}) => {
       )}
       {showCountdownModal && (
         <div className="modal">
-          <div className="modalContent">
+          <div className="modal-content">
             <p>
               Your Reservation Id is: {showResponse.reservation.reservation_id}
             </p>
@@ -498,11 +498,11 @@ export const MovieSelected = ({}) => {
       )}
       {dateClicked && !selectedTime && (
         <div className="modal">
-          <div className="modalContent">
+          <div className="modal-content">
             <p>Please select a time schedule first!</p>
-            <div className="checkoutModalButtons">
+            <div className="checkout-modal-buttons">
               <button
-                className="noButton"
+                className="no-button"
                 onClick={() => setDateClicked(false)}
               >
                 CLOSE
@@ -513,11 +513,11 @@ export const MovieSelected = ({}) => {
       )}
       {showNoSelectedCheckout && (
         <div className="modal">
-          <div className="modalContent">
+          <div className="modal-content">
             <p>Select your schedule and seat first</p>
-            <div className="checkoutModalButtons">
+            <div className="checkout-modal-buttons">
               <button
-                className="noButton"
+                className="no-button"
                 onClick={() => setShowNoSelectedCheckout(false)}
               >
                 CLOSE
@@ -529,14 +529,14 @@ export const MovieSelected = ({}) => {
       {/* modal for going back to homepage */}
       {showCheckoutModalGoBack && (
         <div className="modal">
-          <div className="modalContent">
+          <div className="modal-content">
             <p>Are you sure you want to go back to the homescreen?</p>
-            <div className="checkoutModalButtons">
-              <button className="yesButton" onClick={() => navigate("/")}>
+            <div className="checkout-modal-buttons">
+              <button className="yes-button" onClick={() => navigate("/")}>
                 YES
               </button>
               <button
-                className="noButton"
+                className="no-button"
                 onClick={() => setShowCheckoutModalGoBack(false)}
               >
                 NO
