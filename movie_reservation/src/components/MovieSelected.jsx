@@ -26,8 +26,9 @@ export const MovieSelected = ({}) => {
   const [premierCheck, setPremierCheck] = useState(false);
   const [premierDate, setPremierDate] = useState(null);
   const [dateClicked, setDateClicked] = useState(false);
-  const [showCheckoutModalGoBack,setShowCheckoutModalGoBack] = useState(false)
-  const [showResponse, setShowResponse] = useState([])
+  const [showCheckoutModalGoBack, setShowCheckoutModalGoBack] = useState(false);
+  const [showResponse, setShowResponse] = useState([]);
+  const [showNoSelectedCheckout, setShowNoSelectedCheckout] = useState(false);
 
   const [selectedDate, setSelectedDate] = useState(
     localStorage.getItem("selectedDate")
@@ -248,13 +249,13 @@ export const MovieSelected = ({}) => {
 
   const handleCheckoutClick = (action) => {
     if (action === "checkout") {
-      if (selectedSeats.length === 0) {
+      if (selectedSeats.length !== 0 && selectedTime !== null) {
         setShowCheckOutModal(true);
       } else {
-        setShowCheckOutModal(true);
+        setShowNoSelectedCheckout(true);
       }
     } else if (action === "home") {
-      setShowCheckoutModalGoBack(true)
+      setShowCheckoutModalGoBack(true);
     }
   };
 
@@ -285,7 +286,7 @@ export const MovieSelected = ({}) => {
             reservationData
           )
           .then((response) => {
-            setShowResponse(response.data)
+            setShowResponse(response.data);
             console.log("Reservation added successfully:", response.data);
             setShowCheckOutModal(false);
             setShowCountdownModal(true);
@@ -355,7 +356,6 @@ export const MovieSelected = ({}) => {
           </div>
         )}
       </div>
-
       <div className="seatSelection">
         {[..."HGFEDCBA"].map((row) => (
           <div key={row} className="row">
@@ -388,7 +388,6 @@ export const MovieSelected = ({}) => {
         ))}
         <div className="screen">SCREEN</div>
       </div>
-
       <div className="rightPanelContainer">
         <div className="textContainer">
           <h1>{movie.title}</h1>
@@ -406,15 +405,20 @@ export const MovieSelected = ({}) => {
           </div>
         </div>
         <div className="buttonPanel">
-          <button className="checkoutButton" onClick={() => handleCheckoutClick("checkout")}>
+          <button
+            className="checkoutButton"
+            onClick={() => handleCheckoutClick("checkout")}
+          >
             CHECKOUT
           </button>
-          <button className="goBackButton" onClick={() => handleCheckoutClick("home")}>
+          <button
+            className="goBackButton"
+            onClick={() => handleCheckoutClick("home")}
+          >
             GO BACK
           </button>
         </div>
       </div>
-
       {showCheckOutModal && (
         <div className="modal">
           <div className="modalContent">
@@ -430,7 +434,6 @@ export const MovieSelected = ({}) => {
           </div>
         </div>
       )}
-
       {showCheckOutModal && (
         <div className="modal">
           <div className="modalContent">
@@ -452,7 +455,6 @@ export const MovieSelected = ({}) => {
           </div>
         </div>
       )}
-
       {showSeniorModal && (
         <div className="modal">
           <div className="modalContent">
@@ -476,16 +478,16 @@ export const MovieSelected = ({}) => {
           </div>
         </div>
       )}
-
       {showCountdownModal && (
         <div className="modal">
           <div className="modalContent">
-            <p>Your Reservation Id is: {showResponse.reservation.reservation_id}</p>
+            <p>
+              Your Reservation Id is: {showResponse.reservation.reservation_id}
+            </p>
             <p>Returning to HomeScreen in 3 seconds...</p>
           </div>
         </div>
       )}
-
       {dateClicked && !selectedTime && (
         <div className="modal">
           <div className="modalContent">
@@ -501,17 +503,28 @@ export const MovieSelected = ({}) => {
           </div>
         </div>
       )}
-
+      {showNoSelectedCheckout && (
+        <div className="modal">
+          <div className="modalContent">
+            <p>Select your schedule and seat first</p>
+            <div className="checkoutModalButtons">
+              <button
+                className="noButton"
+                onClick={() => setShowNoSelectedCheckout(false)}
+              >
+                CLOSE
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* modal for going back to homepage */}
       {showCheckoutModalGoBack && (
         <div className="modal">
           <div className="modalContent">
             <p>Are you sure you want to go back to the homescreen?</p>
             <div className="checkoutModalButtons">
-              <button
-                className="yesButton"
-                onClick={() => navigate('/')}
-              >
+              <button className="yesButton" onClick={() => navigate("/")}>
                 YES
               </button>
               <button
