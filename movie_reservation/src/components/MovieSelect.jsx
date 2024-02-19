@@ -51,7 +51,7 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
   }, [location.state, onSelectedDate]);
 
   return (
-    <div className="movieSelect">
+    <div className="movie-select">
       {" "}
       <div className="date-time">
         <h2 className="current-time">{currentTime.toLocaleTimeString()}</h2>

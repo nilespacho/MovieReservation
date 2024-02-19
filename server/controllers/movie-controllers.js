@@ -1,12 +1,12 @@
-const Movie = require('../model/Movie');
+const Movie = require("../model/Movie");
 
 const getAllMovies = async (req, res) => {
   try {
     const movies = await Movie.find();
-    res.json({ status: 'ok', movies });
+    res.json({ status: "ok", movies });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ status: 'error', error: err.message });
+    res.status(500).json({ status: "error", error: err.message });
   }
 };
 
@@ -15,18 +15,20 @@ const getMovieById = async (req, res) => {
     const { id } = req.params;
     const movie = await Movie.findById(id);
     if (!movie) {
-      return res.status(404).json({ status: 'error', error: 'Movie not found' });
+      return res
+        .status(404)
+        .json({ status: "error", error: "Movie not found" });
     }
-    res.json({ status: 'ok', movie });
+    res.json({ status: "ok", movie });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ status: 'error', error: err.message });
+    res.status(500).json({ status: "error", error: err.message });
   }
 };
 
 const createMovie = async (req, res) => {
   try {
-    const { title, genre, poster, director, releaseYear} = req.body;
+    const { title, genre, poster, director, releaseYear } = req.body;
 
     const movie = await Movie.create({
       title,
@@ -36,32 +38,34 @@ const createMovie = async (req, res) => {
       releaseYear,
     });
 
-    res.json({ status: 'ok', movie });
+    res.json({ status: "ok", movie });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ status: 'error', error: err.message });
+    res.status(500).json({ status: "error", error: err.message });
   }
 };
 
 const updateMovie = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, genre, poster, director, releaseYear} = req.body;
+    const { title, genre, poster, director, releaseYear } = req.body;
 
     const updatedMovie = await Movie.findByIdAndUpdate(
       id,
-      { title, genre, poster, director, releaseYear},
+      { title, genre, poster, director, releaseYear },
       { new: true }
-    )
+    );
 
     if (!updatedMovie) {
-      return res.status(404).json({ status: 'error', error: 'Movie not found' });
+      return res
+        .status(404)
+        .json({ status: "error", error: "Movie not found" });
     }
 
-    res.json({ status: 'ok', movie: updatedMovie });
+    res.json({ status: "ok", movie: updatedMovie });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ status: 'error', error: err.message });
+    res.status(500).json({ status: "error", error: err.message });
   }
 };
 
@@ -71,13 +75,15 @@ const deleteMovie = async (req, res) => {
     const deletedMovie = await Movie.findByIdAndDelete(id);
 
     if (!deletedMovie) {
-      return res.status(404).json({ status: 'error', error: 'Movie not found' });
+      return res
+        .status(404)
+        .json({ status: "error", error: "Movie not found" });
     }
 
-    res.json({ status: 'ok', message: 'Movie deleted successfully' });
+    res.json({ status: "ok", message: "Movie deleted successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ status: 'error', error: err.message });
+    res.status(500).json({ status: "error", error: err.message });
   }
 };
 

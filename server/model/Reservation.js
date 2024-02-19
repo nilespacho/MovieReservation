@@ -4,8 +4,8 @@ const reservationSchema = new mongoose.Schema({
   reservation_id: {
     type: Number,
     unique: true,
-    required: true
-},
+    required: true,
+  },
   mov_ID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Movie",
@@ -37,10 +37,10 @@ const reservationSchema = new mongoose.Schema({
   is_cancelled: Boolean,
 });
 
-reservationSchema.pre('save', async function(next) {
+reservationSchema.pre("save", async function (next) {
   if (this.isNew) {
-      const count = await Reservation.countDocuments();
-      this.reservation_id = count + 1;
+    const count = await Reservation.countDocuments();
+    this.reservation_id = count + 1;
   }
   next();
 });

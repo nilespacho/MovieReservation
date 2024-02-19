@@ -131,13 +131,13 @@ export const ReservationList = () => {
 
   return (
     <div className="container">
-      <button className="goBackButton" onClick={() => navigate("/")}>
+      <button className="go-back-button" onClick={() => navigate("/")}>
         GO BACK
       </button>
-      <div className="titleContainer">
+      <div className="title-container">
         <h3 className="title">Reservation List</h3>
       </div>
-      <ul className="listContainer">
+      <ul className="list-container">
         {reservations.map((reservation) => (
           <div key={reservation._id}>
             {reservation.is_cancelled ? null : (
@@ -148,7 +148,7 @@ export const ReservationList = () => {
                 <br />
                 Seats: {reservation.seats.join(", ")} <br />
                 <button
-                  className="deleteButton"
+                  className="delete-button"
                   onClick={() => toggleModal(reservation._id)}
                 >
                   Cancel
@@ -161,18 +161,18 @@ export const ReservationList = () => {
 
       {showModal && (
         <div className="modal">
-          <div className="modalContent">
-            <p className="deleteStatement">
+          <div className="modal-content">
+            <p className="delete-statement">
               Are you sure you want to update this reservation?
             </p>
-            <div className="deleteModalButton">
+            <div className="delete-modal-button">
               <button
-                className="yesButton"
+                className="yes-button"
                 onClick={() => updateReservation(selectedReservationId)}
               >
                 Yes
               </button>
-              <button className="noButton" onClick={() => toggleModal(null)}>
+              <button className="no-button" onClick={() => toggleModal(null)}>
                 No
               </button>
             </div>

@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "../stylesheets/MovieSelected.css";
 import axios from "axios";
 
-export const MovieSelected = ({}) => {
+export const MovieSelected = ({ }) => {
   const navigate = useNavigate();
   const REGPRICE = 350;
   const PREMIERPRICE = 500;
@@ -316,7 +316,7 @@ export const MovieSelected = ({}) => {
 
   const getDateSelected = (dateString) => {
     const date = new Date(dateString);
-    const options = { day: "numeric"};
+    const options = { day: "numeric" };
     time = date.toLocaleDateString(undefined, options);
     return time;
   };
@@ -331,7 +331,7 @@ export const MovieSelected = ({}) => {
     const formattedMinutes = minutes < 10 ? `${minutes}` : minutes;
 
     return `${formattedHours}:${formattedMinutes}`;
-};
+  };
 
   return (
     <div className="containers">
@@ -382,9 +382,8 @@ export const MovieSelected = ({}) => {
               return (
                 <div
                   key={`${row}${col + 1}`}
-                  className={`seat ${
-                    selectedSeats.includes(seatId) ? "selected" : ""
-                  } ${isReserved ? "reserved" : ""}`}
+                  className={`seat ${selectedSeats.includes(seatId) ? "selected" : ""
+                    } ${isReserved ? "reserved" : ""}`}
                   onClick={() => !isReserved && handleSeatClick(seatId)} // Disable click if reserved
                 >
                   {row}
@@ -420,7 +419,7 @@ export const MovieSelected = ({}) => {
             CHECKOUT
           </button>
           <button
-            className="goback-button"
+            className="go-back-button"
             onClick={() => handleCheckoutClick("home")}
           >
             GO BACK

@@ -9,7 +9,7 @@ body {
   overflow: hidden;
 }
 
-.movieSelect {
+.movie-select {
   background-image: url("MovieSelect.png");
   background-size: cover;
   background-position-y: 20%;

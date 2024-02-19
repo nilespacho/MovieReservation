@@ -214,7 +214,7 @@ body{
   align-items: center;
 }
 
-.goback-button {
+.go-back-button {
   width: 80px;
   height: 45px;
   font-size: 16px;
@@ -237,7 +237,7 @@ body{
   cursor: pointer;
 }
 
-.goback-button:hover {
+.go-back-button:hover {
   background-color: #EDF5FF;
   color: #09131E;
 }
