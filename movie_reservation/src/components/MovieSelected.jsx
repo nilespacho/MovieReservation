@@ -314,18 +314,24 @@ export const MovieSelected = ({}) => {
     return time;
   };
 
+  const getDateSelected = (dateString) => {
+    const date = new Date(dateString);
+    const options = { day: "numeric"};
+    time = date.toLocaleDateString(undefined, options);
+    return time;
+  };
+
   const getCurrentTime = () => {
     const now = new Date();
-    const hours = now.getHours();
+    let hours = now.getHours();
     const minutes = now.getMinutes();
 
-    // Formatting hours and minutes to display with leading zeros if needed
-    const formattedHours = hours < 10 ? `0${hours}` : hours;
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    hours = hours % 12 || 12;
+    const formattedHours = hours < 10 ? `${hours}` : hours;
+    const formattedMinutes = minutes < 10 ? `${minutes}` : minutes;
 
-    // Returning the current time in "hh:mm" format
     return `${formattedHours}:${formattedMinutes}`;
-  };
+};
 
   return (
     <div className="containers">
@@ -335,7 +341,9 @@ export const MovieSelected = ({}) => {
           <div className="timeSchedule">
             {formattedAiringTime.map((time) => (
               <div key={time._id} className="timeRow">
-                {getCurrentTime() < time.formattedTime ? (
+                {console.log(`selectedDate ${getDateSelected(selectedDate)}`)}
+                {console.log(`currentDate ${getCurrentTime()}`)}
+                {(getCurrentTime() < time.formattedTime) || (getDateSelected(selectedDate) > new Date().getDate()) ? (
                   <button
                     key={time._id}
                     className={selectedTime === time._id ? "selected" : ""}
