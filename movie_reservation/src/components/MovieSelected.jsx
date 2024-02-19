@@ -463,6 +463,7 @@ export const MovieSelected = ({}) => {
               value={seniorCount}
               onChange={(e) => setSeniorCount(parseInt(e.target.value))}
               min="0"
+              max={selectedSeats.length}
             />
             <div className="seniorModalButton">
               <button
