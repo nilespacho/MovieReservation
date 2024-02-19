@@ -39,7 +39,7 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
     premiereDateTime.setHours(0, 0, 0, 0);
 
     if (!isPremier || (isPremier && currentDate >= premiereDateTime)) {
-      navigate(`/niles/${movieId}`, { state: { movieId } });
+      navigate(`/MovieSelected/${movieId}`, { state: { movieId } });
     }
   };
 
@@ -79,6 +79,9 @@ const MovieSelect = ({ selectedDate, onSelectedDate }) => {
                     : ""
                 }
               />
+              <div className="movie-info">
+                <h2>{movie.title}</h2>
+              </div>
             </div>
           ))}
       </div>

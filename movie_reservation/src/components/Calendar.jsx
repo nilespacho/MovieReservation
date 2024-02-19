@@ -60,7 +60,7 @@ export default class Calendar extends Component {
                 );
               })}
             </div>
-            <Link to="/Reservation">
+            <Link to="/Reservations">
               <button className="reservation-list-button">
                 Reservation List
               </button>

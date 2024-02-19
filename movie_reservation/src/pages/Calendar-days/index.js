@@ -35,7 +35,7 @@ export default function CalendarDays(props) {
       if (day.date < latestEndTime) {
         props.changeCurrentDay(day.date);
         console.log(day.date);
-        navigate("/gi", { state: { selectedDay: day } });
+        navigate("/Movies", { state: { selectedDay: day } });
       }
     }
   };
