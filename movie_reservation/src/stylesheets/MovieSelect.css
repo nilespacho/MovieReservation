@@ -1,91 +1,97 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+.reserved {
+  background-color: grey; /* or any other style to darken the seat */
+  color: white; /* text color for better visibility */
+}
 
 body {
-  background-color: #2C3E50; /* Dark blue-gray background reminiscent of a cinema's ambiance */
+  overflow: hidden;
+}
+
+.movieSelect {
+  background-image: url("MovieSelect.png");
+  background-size: cover;
+  background-position-y: 20%;
+  background-attachment: fixed;
 }
 
 .date {
   position: absolute;
-  font-family: 'Inter', sans-serif;
-  top: 50px; 
-  left: 50%; 
+  top: 95px;
+  left: 50%;
   transform: translateX(-50%);
-  font-size: 25px;
-  color: #FFFFFF; /* White text for better contrast on dark background */
+  font-size: 34px; /* Responsive font size */
+  color: #ffffff;
 }
 
 .date-time {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* padding: 20px; */
 }
 
 .current-time {
-  font-family: 'Inter', sans-serif;
-  font-size: 28px;
+  font-size: 2.5vw; /* Responsive font size */
+  color: #ffffff;
   position: absolute;
   top: 5px;
-  right: 20px; 
-  color: #FFFFFF; /* White text for better contrast on dark background */
+  right: 40px;
 }
 
 .movie-grid {
   display: flex;
   justify-content: center;
-  /* align-items: center; */
   flex-wrap: wrap;
-  gap: 70px;
-  padding: 10px;
-  /* height: 100vh; */
+  gap: 4%; /* Adjust the gap between movie items */
+  padding: 10vw; /* Responsive padding */
 }
 
 .movie-item {
+  flex: 0 0 calc(20% - 1%);
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
+  margin-bottom: 1vw; /* Responsive margin bottom */
 }
 
 .movie-item img {
-  width: 100%; 
-  max-width: 230px; 
-  height: auto; 
-  border-radius: 8px;
-  margin-bottom: 10px; 
-  transition: transform 0.3s ease; 
+  width: 80%; /* Make the image fill its container */
+  height: auto; /* Automatically adjust height to maintain aspect ratio */
+  border-radius: 1vw; /* Responsive border radius */
+  margin-bottom: 2vw; /* Responsive margin bottom */
+  transition: transform 0.3s ease;
 }
 
-.movie-item:hover img {
-  transform: translateY(-10px); 
-}
-
-.cinema-data {
-  font-family: 'Inter', sans-serif;
-  font-size: 55px;
-  text-align: center;
-  margin-bottom: 40px; 
-  margin-top: 180px;  
-  color: #E74C3C; /* Red color for cinema name, reminiscent of theater curtains */
-}
-
-.movie-info h2 {
-  margin-top: 10px;
-  text-align: left;
-  font-family: 'Inter', sans-serif; 
-  font-size: 24px;
-  font-weight: bold;
-  color: #ECF0F1; /* Light gray text for movie titles */
+.movie-item img:hover {
+  transform: translateY(-5px);
 }
 
 @media (max-width: 990px) {
   .movie-item {
-    width: calc(50% - 232px);
+    flex: 0 0 calc(33.33% - 1%);
   }
 }
 
 @media (max-width: 670px) {
   .movie-item {
-    width: calc(100% - 232px);
+    flex: 0 0 calc(50% - 1%);
   }
+}
+
+.cinema-data {
+  font-size: 2.5vw; /* Responsive font size */
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1vw; /* Responsive margin bottom */
+  margin-top: 9vw; /* Responsive margin top */
+  color: #ecf0f1;
+}
+
+.movie-info h2 {
+  margin-top: 0.5vw; /* Responsive margin top */
+  text-align: center;
+  font-size: 1.2vw; /* Responsive font size */
+  color: #ecf0f1; /* Light gray text for movie titles */
 }

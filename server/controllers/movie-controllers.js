@@ -1,6 +1,5 @@
 const Movie = require('../model/Movie');
 
-// Get all movies
 const getAllMovies = async (req, res) => {
   try {
     const movies = await Movie.find();
@@ -11,7 +10,6 @@ const getAllMovies = async (req, res) => {
   }
 };
 
-// Get a specific movie by ID
 const getMovieById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -26,7 +24,6 @@ const getMovieById = async (req, res) => {
   }
 };
 
-// Create a new movie
 const createMovie = async (req, res) => {
   try {
     const { title, genre, poster, director, releaseYear} = req.body;
@@ -46,7 +43,6 @@ const createMovie = async (req, res) => {
   }
 };
 
-// Update a movie by ID
 const updateMovie = async (req, res) => {
   try {
     const { id } = req.params;
@@ -69,7 +65,6 @@ const updateMovie = async (req, res) => {
   }
 };
 
-// Delete a movie by ID
 const deleteMovie = async (req, res) => {
   try {
     const { id } = req.params;
